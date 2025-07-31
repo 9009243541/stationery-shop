@@ -9,8 +9,8 @@ const OtpWithEmailWrapper = () => {
   const [otpSent, setOtpSent] = useState(false);
 
   const API_BASE_URL =
-    process.env.import.meta.env.VITE_API_BASE_URL || "http://localhost:3300";
-
+    import.meta.env.VITE_APP_BASE_URL || "http://localhost:3300";
+  console.log(API_BASE_URL, "API_BASE_URL");
   const initialValues = {
     email: "",
     otp: ["", "", "", "", "", ""], // Assuming 6-digit OTP
