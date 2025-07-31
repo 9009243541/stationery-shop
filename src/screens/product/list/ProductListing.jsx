@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Star, StarHalf, Plus, Minus } from "lucide-react";
 import AtmSearchField from "../../../component/atom/AtmSearchField";
+import ProductDetailsDrawer from "../../../component/molecule/ProductDetailsDrawer";
 
 const ProductListing = ({
   products = [],
@@ -9,6 +10,7 @@ const ProductListing = ({
 }) => {
   const [search, setSearch] = useState("");
   const [quantities, setQuantities] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleQuantityChange = (id, delta) => {
     setQuantities((prev) => ({
@@ -55,7 +57,8 @@ const ProductListing = ({
           return (
             <div
               key={item.id}
-              className="bg-white shadow rounded-xl relative overflow-hidden transition hover:shadow-lg p-3 flex flex-col"
+              className="cursor-pointer bg-white shadow rounded-xl relative overflow-hidden transition hover:shadow-lg p-3 flex flex-col"
+              onClick={() => setSelectedProduct(item)}
             >
               {/* Discount Badge */}
               {item.discount ? (
@@ -68,6 +71,7 @@ const ProductListing = ({
               <img
                 src={item.image || "/default-image.png"}
                 alt={item.name}
+                onClick={() => setSelectedProduct(item)}
                 className="w-full h-36 object-contain bg-gray-50 rounded-md"
               />
 
@@ -112,14 +116,20 @@ const ProductListing = ({
                 <div className="mt-4">
                   <div className="flex items-center justify-center gap-3 mb-3">
                     <button
-                      onClick={() => handleQuantityChange(item.id, -1)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleQuantityChange(item.id, -1);
+                      }}
                       className="p-1 border rounded hover:bg-gray-100"
                     >
                       <Minus size={14} />
                     </button>
                     <span className="text-sm font-semibold">{quantity}</span>
                     <button
-                      onClick={() => handleQuantityChange(item.id, 1)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleQuantityChange(item.id, 1);
+                      }}
                       className="p-1 border rounded hover:bg-gray-100"
                     >
                       <Plus size={14} />
@@ -127,7 +137,10 @@ const ProductListing = ({
                   </div>
 
                   <button
-                    onClick={() => onAddProduct({ ...item, quantity })}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAddProduct({ ...item, quantity });
+                    }}
                     className="w-full border border-red-500 text-red-500 text-sm rounded py-1.5 hover:bg-red-50 transition"
                   >
                     Add To Cart
@@ -138,6 +151,15 @@ const ProductListing = ({
           );
         })}
       </div>
+
+      {/* Product Drawer */}
+      {selectedProduct && (
+        <ProductDetailsDrawer
+          open={!!selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          product={selectedProduct}
+        />
+      )}
     </div>
   );
 };
