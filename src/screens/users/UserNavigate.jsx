@@ -59,9 +59,9 @@ useEffect(() => {
 
         {/* Title */}
         <h2 className="text-2xl font-semibold text-gray-800">
-          Sign in to your account
+          Continue to register 
         </h2>
-        <p className="text-sm text-gray-500">Choose a login method</p>
+        <p className="text-sm text-gray-500"></p>
 
         {/* Google Login Button */}
         <button
@@ -92,7 +92,7 @@ useEffect(() => {
           to="/otp"
           className="w-full block text-center px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition font-medium"
         >
-          Login with Mobile
+          continue with email 
         </Link>
 
         {/* Already registered */}
