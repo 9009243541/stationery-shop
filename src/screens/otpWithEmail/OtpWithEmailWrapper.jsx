@@ -8,22 +8,22 @@ const OtpWithEmailWrapper = () => {
   const navigate = useNavigate();
   const [otpSent, setOtpSent] = useState(false);
 
-  const API_BASE_URL =
-    process.env.import.meta.env.VITE_API_BASE_URL || "http://localhost:3300";
-
+ const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL;
+  // console.log("API Base URL:", API_BASE_URL);
   const initialValues = {
     email: "",
-    otp: ["", "", "", "", "", ""], // Assuming 6-digit OTP
+    otp: ["", "", "", "", "", ""], // 6-digit OTP
   };
 
+  // Send OTP
   const handleSendOtp = async (email) => {
-    try {
-      if (!email) {
-        toast.error("Please enter an email before sending OTP");
-        return;
-      }
+    if (!email) {
+      toast.error("Please enter your email before requesting OTP.");
+      return;
+    }
 
-      const response = await fetch(`${API_BASE_URL}/otp/send`, {
+    try {
+      const response = await fetch(`${API_BASE_URL}otp/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -32,21 +32,22 @@ const OtpWithEmailWrapper = () => {
       const data = await response.json();
 
       if (response.ok) {
-        toast.success(data.message || "OTP sent successfully");
+        toast.success(data.message || "OTP sent successfully!");
         setOtpSent(true);
       } else {
-        toast.error(data.message || "Failed to send OTP");
+        toast.error(data.message || "Failed to send OTP.");
       }
     } catch (error) {
-      console.error("Error sending OTP:", error);
-      toast.error("An error occurred while sending OTP");
+      console.error("Send OTP error:", error);
+      toast.error("Something went wrong while sending OTP.");
     }
   };
 
+  // Verify OTP
   const handleVerifyOtp = async (values) => {
-    const otpValue = values.otp.join("");
+    const otpValue = values.otp.join(""); // Join 6 digits
     try {
-      const response = await fetch(`${API_BASE_URL}/otp/verify`, {
+      const response = await fetch(`${API_BASE_URL}otp/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: values.email, otp: otpValue }),
@@ -56,14 +57,13 @@ const OtpWithEmailWrapper = () => {
 
       if (response.ok) {
         toast.success("OTP Verified Successfully!");
-        // Pass email to register page
         navigate("/register", { state: { email: values.email } });
       } else {
         toast.error(data.message || "Invalid OTP. Please try again.");
       }
     } catch (error) {
-      console.error("Error verifying OTP:", error);
-      toast.error("An error occurred while verifying OTP.");
+      console.error("Verify OTP error:", error);
+      toast.error("Something went wrong while verifying OTP.");
     }
   };
 
