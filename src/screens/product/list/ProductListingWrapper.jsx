@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 // import React, { useEffect, useState } from "react";
 // import ProductListing from "./ProductListing";
 // import { useGetAllProductsQuery } from "../../../slice/ProductApiSlice";
@@ -65,10 +66,15 @@
 
 // export default ProductListingWrapper;
 import React from "react";
+=======
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+>>>>>>> Stashed changes
 import ProductListing from "./ProductListing";
 import { useGetAllProductsQuery } from "../../../slice/ProductApiSlice";
 
 const ProductListingWrapper = () => {
+<<<<<<< Updated upstream
   const { data, isLoading, isError } = useGetAllProductsQuery();
 
   const products =
@@ -103,6 +109,108 @@ const ProductListingWrapper = () => {
   return (
     <div className="p-4">
       <ProductListing products={products} />
+=======
+  const [products, setProducts] = useState([]);
+  const [filtered, setFiltered] = useState([]); // Filtered data after search
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+
+  const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL;
+
+  // Fetch all products
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`${API_BASE_URL}/products`);
+      setProducts(res.data || []);
+      setFiltered(res.data || []);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setLoading(false);
+    }
+  };
+
+  // Search filter
+  useEffect(() => {
+    const filteredData = products.filter((product) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+    setFiltered(filteredData);
+    setCurrentPage(1); // Reset to page 1 on new search
+  }, [search, products]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filtered.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/products/${id}`);
+      fetchProducts(); // Refetch after delete
+    } catch (error) {
+      console.error("Delete failed:", error);
+    }
+  };
+
+  return (
+    <div className="p-4">
+      <input
+        type="text"
+        placeholder="Search products..."
+        className="mb-4 p-2 border rounded w-full md:w-1/3"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      {loading ? (
+        <p>Loading products...</p>
+      ) : (
+        <ProductListing products={currentItems} onDelete={handleDelete} />
+      )}
+
+      {/* Pagination controls */}
+      <div className="flex gap-2 justify-center mt-6">
+        <button
+          className="px-3 py-1 bg-gray-200 rounded"
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
+        {[...Array(totalPages)].map((_, i) => (
+          <button
+            key={i}
+            className={`px-3 py-1 rounded ${
+              currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-100"
+            }`}
+            onClick={() => handlePageChange(i + 1)}
+          >
+            {i + 1}
+          </button>
+        ))}
+        <button
+          className="px-3 py-1 bg-gray-200 rounded"
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
+>>>>>>> Stashed changes
     </div>
   );
 };
