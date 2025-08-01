@@ -70,13 +70,15 @@ const UserProfileWrapper = () => {
 
   const { firstName, lastName, email, age, mobile, address, image } =
     data.data;
+     const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      
       <UserProfile
         imageUrl={
           image
-            ? `http://localhost:3300/uploads/${image}`
+            ? `${API_BASE_URL}/uploads/${image}`
             : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIRmKUzViUy_qBC99RQ9XxR67HpVE9ZdH24hCXaKe6y9muPQGTZ7mP79c&s"
         }
         name={`${firstName} ${lastName}` || "No Name"}

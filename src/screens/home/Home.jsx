@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import MyCarousel from "../../component/MyCarousel";
+import ProductListingWrapper from "../product/list/ProductListingWrapper";
+import Product from "../../MyComponent/product";
 
 const Home = () => {
   return (
@@ -37,6 +39,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <ProductListingWrapper />
 
       {/* Features Section */}
       <section className="py-16 px-4 bg-gray-50">
@@ -90,6 +94,7 @@ const Home = () => {
           </Link>
         </div>
       </section>
+      <Product />
     </div>
   );
 };
