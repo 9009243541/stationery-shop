@@ -8,21 +8,22 @@ const ProductApiSlice = stationeryApiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: [{ type: "Product", id: "LIST" }],
     }),
     getAllProducts: builder.query({
-      query: (userId) => ({
-        url: `products/getproducts`,
+      query: () => ({
+        url: "products/getproducts",
         method: "GET",
       }),
-      providesTags: [{ type: "User", id: "LIST" }],
+      providesTags: [{ type: "Product", id: "LIST" }],
     }),
-    updateProducts: builder.mutation({
+    updateProduct: builder.mutation({
       query: ({ productId, data }) => ({
         url: `products/update-product/${productId}`,
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: [{ type: "User", id: "LIST" }],
+      invalidatesTags: [{ type: "Product", id: "LIST" }],
     }),
   }),
 });
@@ -30,6 +31,7 @@ const ProductApiSlice = stationeryApiSlice.injectEndpoints({
 export const {
   useAddProductMutation,
   useGetAllProductsQuery,
-  useUpdateProductsMutation,
+  useUpdateProductMutation,
 } = ProductApiSlice;
+
 export default ProductApiSlice;
