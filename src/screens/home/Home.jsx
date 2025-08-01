@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MyCarousel from "../../component/MyCarousel";
 import ProductListingWrapper from "../product/list/ProductListingWrapper";
-import Product from "../../MyComponent/product";
 
 const Home = () => {
   return (
@@ -94,7 +93,6 @@ const Home = () => {
           </Link>
         </div>
       </section>
-      <Product />
     </div>
   );
 };
