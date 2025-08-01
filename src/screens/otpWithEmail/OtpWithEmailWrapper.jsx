@@ -7,15 +7,10 @@ import { toast } from "react-toastify";
 const OtpWithEmailWrapper = () => {
   const navigate = useNavigate();
   const [otpSent, setOtpSent] = useState(false);
-
-<<<<<<< HEAD
- const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL;
-  // console.log("API Base URL:", API_BASE_URL);
-=======
-  const API_BASE_URL =
+ const API_BASE_URL =
     import.meta.env.VITE_APP_BASE_URL || "http://localhost:3300";
   console.log(API_BASE_URL, "API_BASE_URL");
->>>>>>> 2bdf173d3acd8fad16d2a37601f412243d32fb3a
+
   const initialValues = {
     email: "",
     otp: ["", "", "", "", "", ""], // 6-digit OTP
