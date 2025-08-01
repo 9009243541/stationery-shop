@@ -12,7 +12,7 @@ const stationeryApiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Otp","User"],
+  tagTypes: ["Otp", "User", "Product"],
   endpoints: () => ({}),
 });
 export default stationeryApiSlice;
