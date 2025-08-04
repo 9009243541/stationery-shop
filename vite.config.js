@@ -1,10 +1,10 @@
-// import { defineConfig } from 'vite'
-// import tailwindcss from '@tailwindcss/vite'
-// export default defineConfig({
-//   plugins: [
-//     tailwindcss(),
-//   ],
-// })
+import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+  ],
+})
 
 // import { defineConfig } from 'vite'
 // import tailwindcss from '@tailwindcss/vite'
@@ -21,16 +21,20 @@
 //     },
 //   },
 // })
-import { defineConfig } from "vite";
-import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig({
-  plugins: [tailwindcss()],
-  server: {
-    host: "localhost",
-    port: 5173,
-    hmr: {
-      overlay: false, 
-    },
-  },
-});
+
+
+
+// import { defineConfig } from "vite";
+// import tailwindcss from "@tailwindcss/vite";
+
+// export default defineConfig({
+//   plugins: [tailwindcss()],
+//   server: {
+//     host: "localhost",
+//     port: 5173,
+//     hmr: {
+//       overlay: false, 
+//     },
+//   },
+// });
