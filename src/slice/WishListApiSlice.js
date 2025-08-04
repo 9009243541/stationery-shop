@@ -19,15 +19,15 @@ const WishListApiSlice = stationeryApiSlice.injectEndpoints({
       invalidatesTags: [{ type: "Wishlist", id: "LIST" }],
     }),
     getWishlist: builder.query({
-      query: (userId) => ({
-        url: `wishlist/get/${userId}`,
+      query: () => ({
+        url: `wishlist/get`,
         method: "GET",
       }),
       providesTags: [{ type: "Wishlist", id: "LIST" }],
     }),
     deleteWishlist: builder.mutation({
-      query: (userId) => ({
-        url: `wishlist/delete/${userId}`,
+      query: () => ({
+        url: `wishlist/delete`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Wishlist", id: "LIST" }],
