@@ -1,10 +1,9 @@
-
-
 import React, { useState } from "react";
 import { Star, StarHalf, Plus, Minus, Heart } from "lucide-react";
 import { FaShoppingCart } from "react-icons/fa";
 import AtmSearchField from "../../../component/atom/AtmSearchField";
 import ProductDetailsDrawer from "../../../component/molecule/ProductDetailsDrawer";
+import axios from "axios";
 
 const ProductListing = ({
   products = [],
@@ -16,6 +15,8 @@ const ProductListing = ({
   const [wishlist, setWishlist] = useState({});
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const token = localStorage.getItem("token");
+
   const handleQuantityChange = (id, delta) => {
     setQuantities((prev) => ({
       ...prev,
@@ -23,12 +24,23 @@ const ProductListing = ({
     }));
   };
 
-  const toggleWishlist = (e, id) => {
+  const toggleWishlist = async (e, productId) => {
     e.stopPropagation();
-    setWishlist((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  
+    console.log("Toggling wishlist for product:", productId, "Is wished:", token);
+    try {
+    
+        // Add to wishlist
+        await axios.post(
+          `https://tbtdj99v-3300.inc1.devtunnels.ms/wishlist/add`,{
+            productId: productId,
+             headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },);}
+        catch (error) {
+      console.error("Wishlist API error:", error);
+    }
   };
 
   const filteredProducts = products.filter((item) =>
@@ -98,6 +110,7 @@ const ProductListing = ({
                 src={item.image || "/default-image.png"}
                 alt={item.name}
                 className="w-full h-36 object-contain bg-gray-50 rounded-md"
+                onClick={() => setSelectedProduct(item)}
               />
 
               {/* Product Info */}
