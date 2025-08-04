@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Star, StarHalf, Plus, Minus, Heart } from "lucide-react";
 import { FaShoppingCart } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import AtmSearchField from "../../../component/atom/AtmSearchField";
 import ProductDetailsDrawer from "../../../component/molecule/ProductDetailsDrawer";
 import axios from "axios";
@@ -16,6 +19,7 @@ const ProductListing = ({
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const token = localStorage.getItem("token");
+  const BASE_URL = "https://tbtdj99v-3300.inc1.devtunnels.ms";
 
   const handleQuantityChange = (id, delta) => {
     setQuantities((prev) => ({
@@ -26,20 +30,48 @@ const ProductListing = ({
 
   const toggleWishlist = async (e, productId) => {
     e.stopPropagation();
-  
-    console.log("Toggling wishlist for product:", productId, "Is wished:", token);
+    const isWished = wishlist[productId];
+
     try {
-    
-        // Add to wishlist
-        await axios.post(
-          `https://tbtdj99v-3300.inc1.devtunnels.ms/wishlist/add`,{
-            productId: productId,
-             headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },);}
-        catch (error) {
+      const url = `${BASE_URL}/wishlist/${isWished ? "remove" : "add"}`;
+      await axios.post(
+        url,
+        { productId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setWishlist((prev) => ({
+        ...prev,
+        [productId]: !isWished,
+      }));
+
+      toast.success(
+        isWished ? "Removed from wishlist" : "Added to wishlist",
+        { position: "top-right" }
+      );
+    } catch (error) {
       console.error("Wishlist API error:", error);
+      toast.error("Wishlist update failed", { position: "top-right" });
+    }
+  };
+
+  const addToCart = async (productId, quantity) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/cart/add`,
+        { productId, quantity },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      console.log("Add to cart success:", response.data);
+      toast.success("🛒 Added to cart!", { position: "bottom-right" });
+    } catch (error) {
+      console.error("Add to cart error:", error);
+      toast.error("Failed to add to cart", { position: "bottom-right" });
     }
   };
 
@@ -56,7 +88,10 @@ const ProductListing = ({
   }
 
   return (
-    <div className="px-4 py-6">
+    <div className="px-4 py-6 relative">
+      {/* Toast container */}
+      <ToastContainer />
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
         <h1 className="text-3xl font-extrabold text-gray-800">Products</h1>
@@ -75,10 +110,9 @@ const ProductListing = ({
         {filteredProducts.map((item) => {
           const quantity = quantities[item.id] || 1;
           const discountedPrice = item.price - (item.discount || 0);
-          const discountPercent =
-            item.discount && item.price
-              ? Math.round((item.discount / item.price) * 100)
-              : 0;
+          const discountPercent = item.discount
+            ? Math.round((item.discount / item.price) * 100)
+            : 0;
 
           return (
             <div
@@ -110,13 +144,13 @@ const ProductListing = ({
                 src={item.image || "/default-image.png"}
                 alt={item.name}
                 className="w-full h-36 object-contain bg-gray-50 rounded-md"
-                onClick={() => setSelectedProduct(item)}
               />
 
               {/* Product Info */}
               <div className="mt-3 flex-grow flex flex-col justify-between">
                 <div>
-                  <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-0.5 rounded">
+                  <span>{item._id}</span>
+                  <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-0.5 rounded ml-2">
                     {item.category || "General"}
                   </span>
                   <h2 className="mt-1 text-sm font-semibold text-gray-800 truncate">
@@ -134,20 +168,14 @@ const ProductListing = ({
                   </div>
                   <div className="flex items-center mt-1 text-yellow-400">
                     {Array.from({ length: 4 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        size={14}
-                        fill="currentColor"
-                        stroke="none"
-                      />
+                      <Star key={i} size={14} fill="currentColor" stroke="none" />
                     ))}
                     <StarHalf size={14} fill="currentColor" stroke="none" />
                   </div>
                 </div>
 
-                {/* Bottom Row: Quantity and Cart */}
+                {/* Quantity and Add to Cart */}
                 <div className="mt-4 flex items-center justify-between">
-                  {/* Quantity Controls */}
                   <div className="flex items-center gap-2">
                     <button
                       onClick={(e) => {
@@ -169,12 +197,10 @@ const ProductListing = ({
                       <Plus size={14} />
                     </button>
                   </div>
-
-                  {/* Add to Cart Button */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      onAddProduct({ ...item, quantity });
+                      addToCart(item.id, quantity);
                     }}
                     className="flex items-center gap-1 border border-red-500 text-red-500 text-sm rounded px-3 py-1.5 hover:bg-red-50 transition"
                   >

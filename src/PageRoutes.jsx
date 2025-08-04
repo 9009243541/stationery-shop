@@ -24,13 +24,13 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/", element: <HomeListWrapper /> },
-      // { path: "/product", element: <ProductListingWrapper /> },
+      { path: "/product", element: <ProductListingWrapper /> },
       { path: "/about", element: <AboutUs /> },
       { path: "/contact", element: <Contact /> },
       { path: "/cart", element: <CartListWrapper /> },
       { path: "/category", element: <CategoryListWrapper /> },
-      // { path: "/wishlist", element:  <Wishlist />}, 
-      { path: "/product-details", element:  <Wishlist />},// Assuming wishlist uses the same component
+      { path: "/wishlist", element:  <Wishlist />}, 
+      // Assuming wishlist uses the same component
     ],
   },
   { path: "/user", element: <UserNavigate /> },
