@@ -27,15 +27,15 @@ const CartApiSlice = stationeryApiSlice.injectEndpoints({
       invalidatesTags: [{ type: "Cart", id: "LIST" }],
     }),
     getCart: builder.query({
-      query: (userId) => ({
-        url: `cart/get/${userId}`,
+      query: () => ({
+        url: `cart/get`,
         method: "GET",
       }),
       providesTags: [{ type: "Cart", id: "LIST" }],
     }),
     deleteCart: builder.mutation({
-      query: (userId) => ({
-        url: `cart/delete/${userId}`,
+      query: () => ({
+        url: `cart/delete`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Cart", id: "LIST" }],
