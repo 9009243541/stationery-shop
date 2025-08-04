@@ -1,5 +1,8 @@
+
+
 import React, { useState } from "react";
-import { Star, StarHalf, Plus, Minus } from "lucide-react";
+import { Star, StarHalf, Plus, Minus, Heart } from "lucide-react";
+import { FaShoppingCart } from "react-icons/fa";
 import AtmSearchField from "../../../component/atom/AtmSearchField";
 import ProductDetailsDrawer from "../../../component/molecule/ProductDetailsDrawer";
 
@@ -10,12 +13,21 @@ const ProductListing = ({
 }) => {
   const [search, setSearch] = useState("");
   const [quantities, setQuantities] = useState({});
+  const [wishlist, setWishlist] = useState({});
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleQuantityChange = (id, delta) => {
     setQuantities((prev) => ({
       ...prev,
       [id]: Math.max((prev[id] || 1) + delta, 1),
+    }));
+  };
+
+  const toggleWishlist = (e, id) => {
+    e.stopPropagation();
+    setWishlist((prev) => ({
+      ...prev,
+      [id]: !prev[id],
     }));
   };
 
@@ -59,48 +71,54 @@ const ProductListing = ({
           return (
             <div
               key={item.id}
-              className="cursor-pointer bg-white shadow rounded-xl relative overflow-hidden transition hover:shadow-lg p-3 flex flex-col"
+              className="relative bg-white shadow rounded-xl overflow-hidden transition hover:shadow-lg p-3 flex flex-col cursor-pointer"
               onClick={() => setSelectedProduct(item)}
             >
               {/* Discount Badge */}
-              {item.discount ? (
-                <span className="absolute top-2 right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-bl-md">
+              {item.discount && (
+                <span className="absolute top-2 left-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-bl-md rounded-tr-md z-10">
                   {discountPercent}% OFF
                 </span>
-              ) : null}
+              )}
 
-              {/* Image */}
+              {/* Wishlist Icon */}
+              <button
+                className="absolute top-2 right-2 bg-white p-1 rounded-full z-10 hover:bg-red-100"
+                onClick={(e) => toggleWishlist(e, item.id)}
+              >
+                {wishlist[item.id] ? (
+                  <Heart className="text-red-500 fill-red-500" size={18} />
+                ) : (
+                  <Heart className="text-gray-400" size={18} />
+                )}
+              </button>
+
+              {/* Product Image */}
               <img
                 src={item.image || "/default-image.png"}
                 alt={item.name}
-                onClick={() => setSelectedProduct(item)}
                 className="w-full h-36 object-contain bg-gray-50 rounded-md"
               />
 
-              {/* Content */}
+              {/* Product Info */}
               <div className="mt-3 flex-grow flex flex-col justify-between">
                 <div>
-                  {/* Category */}
                   <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-0.5 rounded">
                     {item.category || "General"}
                   </span>
-
-                  {/* Name */}
                   <h2 className="mt-1 text-sm font-semibold text-gray-800 truncate">
                     {item.name}
                   </h2>
-
-                  {/* Price */}
                   <div className="mt-1 flex items-center gap-2">
                     <span className="text-base font-bold text-gray-900">
                       ₹{discountedPrice}
                     </span>
-                    <span className="text-xs text-gray-400 line-through">
-                      ₹{item.price}
-                    </span>
+                    {item.discount && (
+                      <span className="text-xs text-gray-400 line-through">
+                        ₹{item.price}
+                      </span>
+                    )}
                   </div>
-
-                  {/* Rating */}
                   <div className="flex items-center mt-1 text-yellow-400">
                     {Array.from({ length: 4 }).map((_, i) => (
                       <Star
@@ -114,9 +132,10 @@ const ProductListing = ({
                   </div>
                 </div>
 
-                {/* Quantity + Cart Button */}
-                <div className="mt-4">
-                  <div className="flex items-center justify-center gap-3 mb-3">
+                {/* Bottom Row: Quantity and Cart */}
+                <div className="mt-4 flex items-center justify-between">
+                  {/* Quantity Controls */}
+                  <div className="flex items-center gap-2">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -138,14 +157,16 @@ const ProductListing = ({
                     </button>
                   </div>
 
+                  {/* Add to Cart Button */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onAddProduct({ ...item, quantity });
                     }}
-                    className="w-full border border-red-500 text-red-500 text-sm rounded py-1.5 hover:bg-red-50 transition"
+                    className="flex items-center gap-1 border border-red-500 text-red-500 text-sm rounded px-3 py-1.5 hover:bg-red-50 transition"
                   >
-                    Add To Cart
+                    <FaShoppingCart size={16} />
+                    Add to Cart
                   </button>
                 </div>
               </div>

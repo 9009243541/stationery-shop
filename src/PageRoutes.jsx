@@ -15,6 +15,7 @@ import UserRegisterWrapper from "./screens/users/UserRegister/UserRegisterWrappe
 import UserProfileWrapper from "./screens/users/UserProfile/UserProfileWrapper";
 import OtpWithPhoneWrapper from "./screens/otpWithPhone/OtpWithPhoneWrapper";
 import EditUserProfileWrapper from "./screens/users/EditUser/EditUserProfileWrapper";
+import Wishlist from "./MyComponent/Wishlist"; // Assuming this is the wishlist component
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/cart", element: <CartListWrapper /> },
       { path: "/category", element: <CategoryListWrapper /> },
+      { path: "/wishlist", element:  <Wishlist />}, // Assuming wishlist uses the same component
     ],
   },
   { path: "/user", element: <UserNavigate /> },
