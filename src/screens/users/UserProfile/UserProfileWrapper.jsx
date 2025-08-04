@@ -1,34 +1,4 @@
-// import React from "react";
-// import UserProfile from "./UserProfile";
 
-// const UserProfileWrapper = () => {
-
-//   const userData = [
-//     {
-//       imageUrl:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIRmKUzViUy_qBC99RQ9XxR67HpVE9ZdH24hCXaKe6y9muPQGTZ7mP79c&s",
-//       name: "neeraj",
-//       email: "neeraj@gmail.com",
-//       address: "123 Main Street, Indore, MP",
-//     },
-//   ];
-
-//   return (
-//     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-//       {userData.map((user, index) => (
-//         <UserProfile
-//           key={index}
-//           imageUrl={user.imageUrl}
-//           name={user.name}
-//           email={user.email}
-//           address={user.address}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default UserProfileWrapper;
 import React from "react";
 import { jwtDecode } from "jwt-decode";
 import UserProfile from "./UserProfile";
@@ -62,11 +32,6 @@ const UserProfileWrapper = () => {
       </div>
     );
   }
-  console.log("Token:", token);
-  console.log("UserID:", userId);
-  console.log("Data from API:", data);
-  console.log("isLoading:", isLoading);
-  console.log("isError:", isError);
 
   const { firstName, lastName, email, age, mobile, address, image } =
     data.data;
