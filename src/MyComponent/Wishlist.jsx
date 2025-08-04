@@ -1,32 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
+import { useGetWishlistQuery } from "../slice/WishListApiSlice";
 
 const Wishlist = () => {
-  const [wishlist, setWishlist] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem('token'); // Ensure token is stored after login
+  const token = localStorage.getItem("token");
+  const { data, error, isLoading } = useGetWishlistQuery();
 
-  // Fetch wishlist products
-  const fetchWishlist = async () => {
-    try {
-      const res = await axios.get('https://your-api-url.com/wishlist', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setWishlist(res.data.products || []);
-    } catch (error) {
-      console.error('Error fetching wishlist:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchWishlist();
-  }, []);
-
-  // Add to cart function
   const handleAddToCart = async (productId) => {
     try {
       await axios.post(
@@ -38,14 +17,17 @@ const Wishlist = () => {
           },
         }
       );
-      alert('Product added to cart!');
+      alert("Product added to cart!");
     } catch (error) {
-      console.error('Error adding to cart:', error);
-      alert('Failed to add to cart.');
+      console.error("Error adding to cart:", error);
+      alert("Failed to add to cart.");
     }
   };
 
-  if (loading) return <p>Loading wishlist...</p>;
+  if (isLoading) return <p>Loading wishlist...</p>;
+  if (error) return <p>Error loading wishlist</p>;
+
+  const wishlist = data?.products || [];
 
   return (
     <div className="container my-4">
@@ -61,12 +43,12 @@ const Wishlist = () => {
                   src={product.image}
                   className="card-img-top"
                   alt={product.name}
-                  style={{ height: '250px', objectFit: 'cover' }}
+                  style={{ height: "250px", objectFit: "cover" }}
                 />
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title">{product.name}</h5>
                   <p className="card-text text-muted">
-                    ₹{product.price.toFixed(2)}
+                    ₹{product.price?.toFixed(2)}
                   </p>
                   <button
                     className="btn btn-primary mt-auto"
