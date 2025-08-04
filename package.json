@@ -18,6 +18,7 @@
     "@tabler/icons-react": "^3.34.0",
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.11.0",
+    "bootstrap": "^5.3.7",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.9",
     "jwt-decode": "^4.0.0",
