@@ -4,11 +4,11 @@ import { Form, Formik } from "formik";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { UserRegisterValidatinSchema } from "../UserRegister/UserRegisterValidatinSchema";
 import {
   useGetUserProfileQuery,
   useUpdateUserMutation,
 } from "../../../slice/UserAuthApiSlice";
+import { validationEditUserSchema } from "./validationEditUserSchema";
 
 const EditUserProfileWrapper = () => {
   const { userId } = useParams();
@@ -41,7 +41,7 @@ const EditUserProfileWrapper = () => {
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        // validationSchema={UserRegisterValidatinSchema}
+        validationSchema={validationEditUserSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const formData = new FormData();
