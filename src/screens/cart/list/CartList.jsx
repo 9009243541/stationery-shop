@@ -76,38 +76,42 @@ const CartList = () => {
     fetchCartItems();
   }, []);
 
-  if (loading) return <p>Loading cart...</p>;
-  if (cartItems.length === 0) return <p>Your cart is empty.</p>;
+  if (loading) return <p className="text-center text-gray-500 mt-6">Loading cart...</p>;
+  if (cartItems.length === 0) return <p className="text-center text-gray-400 mt-6">Your cart is empty.</p>;
 
   return (
-    <div className="container mt-4">
+    <div className="max-w-4xl mx-auto px-4 py-6">
       <ToastContainer />
-      <h3>Your Cart</h3>
+      <h3 className="text-2xl font-semibold mb-6">🛒 Your Cart</h3>
 
-      {cartItems.map((item) => (
-        <div key={item._id} className="card mb-3">
-          <div className="card-body d-flex justify-content-between align-items-center">
-            <div>
-              <h5 className="card-title">{item.product?.productName}</h5>
-              <p className="card-text">Quantity: {item.quantity}</p>
-              <p className="card-text">Price: ₹{item.product?.rate}</p>
+      <div className="space-y-4">
+        {cartItems.map((item) => (
+          <div
+            key={item._id}
+            className="bg-white shadow rounded-md flex flex-col md:flex-row justify-between items-center p-4"
+          >
+            <div className="flex-1">
+              <h5 className="text-lg font-medium">{item.product?.productName}</h5>
+              <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+              <p className="text-sm text-gray-600 mb-2">Price: ₹{item.product?.rate}</p>
               <button
-                className="btn btn-danger btn-sm mt-2"
+                className="text-white bg-red-500 hover:bg-red-600 text-sm px-3 py-1 rounded"
                 onClick={() => removeFromCart(item.product._id)}
               >
                 Remove
               </button>
             </div>
+
             {item.product?.image && (
               <img
-                src={`${BASE_URL}/uploads/${item.product.image}`}
+                src={`${BASE_URL}/uploads/${item.product.image.replace(/\\/g, '/')}`}
                 alt={item.product.productName}
-                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                className="w-24 h-24 object-cover rounded mt-4 md:mt-0 md:ml-4"
               />
             )}
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
       <button className="btn btn-primary mt-3">
        

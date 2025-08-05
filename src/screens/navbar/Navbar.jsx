@@ -26,8 +26,8 @@ const NavIcon = ({ to, icon: Icon, label, ariaLabel = label }) => {
         to={to}
         aria-label={ariaLabel}
         className={`transition-colors duration-300 ${
-          isActive ? "text-emerald-600" : "text-gray-700 dark:text-white"
-        } group-hover:text-emerald-500`} 
+          isActive ? "text-[#206577]" : "text-gray-700"
+        } group-hover:text-[#206577]`}
       >
         <Icon size={24} />
       </Link>
@@ -57,7 +57,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-md py-3 px-6 sticky top-0 z-50 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+    <nav className="bg-white border-b border-gray-300 shadow-md py-3 px-6 sticky top-0 z-50">
       <div className="flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 no-underline">
@@ -67,18 +67,24 @@ const Navbar = () => {
             className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-cover rounded"
             loading="lazy"
           />
-          <span className="relative group font-extrabold text-transparent text-lg sm:text-xl bg-clip-text bg-gradient-to-r from-emerald-600 via-orange-400 to-blue-500 hover:animate-pulse">
-            AV Foundation
-            <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-black text-white text-xs px-3 py-1 rounded shadow-lg z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="leading-tight group relative">
+            <h1 className="text-[#1e4f91] text-[18px] sm:text-[20px] font-bold font-serif">
+              AV Foundation
+            </h1>
+            <p className="text-[#f1b71c] text-[11px] sm:text-[12px] italic font-medium tracking-wide">
+              Nourishing Lives with Purpose
+            </p>
+            {/* Tooltip aligned to the left */}
+            <span className="absolute top-full left-0 mt-1 hidden group-hover:block bg-black text-white text-xs px-3 py-1 rounded shadow-lg z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               Acharya Vidhyasagar Foundation
             </span>
-          </span>
+          </div>
         </Link>
 
         {/* Mobile Toggle */}
         <button
           aria-label="Toggle mobile menu"
-          className="md:hidden text-emerald-600 dark:text-emerald-300 transition-transform hover:scale-110"
+          className="md:hidden text-[#1e4f91] transition-transform hover:scale-110"
           onClick={() => setIsMobileMenuOpen((prev) => !prev)}
         >
           {isMobileMenuOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
@@ -94,13 +100,13 @@ const Navbar = () => {
                   to={to}
                   className={`px-3 py-2 transition-all duration-300 !no-underline relative ${
                     isActive
-                      ? "text-emerald-600 dark:text-emerald-400 font-semibold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-emerald-600"
-                      : "text-gray-900 dark:text-white hover:text-emerald-600"
+                      ? "text-[#206577] font-semibold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-[#206577]"
+                      : "text-gray-800 hover:text-[#206577]"
                   }`}
                 >
                   {label}
                   {!isActive && (
-                    <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-emerald-600 transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-[#206577] transition-all duration-300 group-hover:w-full"></span>
                   )}
                 </Link>
               </li>
