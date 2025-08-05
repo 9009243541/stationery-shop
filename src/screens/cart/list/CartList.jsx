@@ -109,12 +109,10 @@ const CartList = () => {
         </div>
       ))}
 
-      <button
-        className="btn btn-success mt-3"
-        onClick={placeOrder}
-        disabled={placingOrder}
-      >
-        {placingOrder ? 'Placing Order...' : 'Place Order'}
+      <button className="btn btn-primary mt-3">
+       
+        Procedd to checkout
+
       </button>
     </div>
   );
