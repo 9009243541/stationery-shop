@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useGetWishlistQuery } from '../slice/WishListApiSlice';
+import React, { useState } from "react";
+import { useGetWishlistQuery } from "../slice/WishListApiSlice";
 
-const BASE_URL = 'https://tbtdj99v-3300.inc1.devtunnels.ms'; // ✅ Your backend base URL
+const BASE_URL = "https://tbtdj99v-3300.inc1.devtunnels.ms";
 const ITEMS_PER_PAGE = 8;
 
 const Wishlist = () => {
@@ -17,7 +17,7 @@ const Wishlist = () => {
   );
 
   const handleAddToCart = (productId) => {
-    console.log('Add to cart:', productId);
+    console.log("Add to cart:", productId);
   };
 
   const handlePageChange = (page) => {
@@ -26,78 +26,107 @@ const Wishlist = () => {
     }
   };
 
-  if (isLoading) return <p className="text-center mt-4">Loading wishlist...</p>;
+  if (isLoading) {
+    return (
+      <p className="text-center mt-10 text-lg text-gray-500">
+        Loading wishlist...
+      </p>
+    );
+  }
 
   return (
-    <div className="container my-5">
-      <h2 className="text-center mb-4 fw-bold">❤️ My Wishlist</h2>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <h2 className="text-3xl font-bold text-center mb-6 text-pink-600">
+        ❤️ My Wishlist
+      </h2>
 
       {wishlistProducts.length === 0 ? (
-        <div className="text-center text-muted">No items in wishlist.</div>
+        <div className="text-center text-gray-400 text-lg">
+          No items in wishlist.
+        </div>
       ) : (
         <>
-          <div className="row g-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {paginatedProducts.map((product) => {
               const imageUrl = product.image
-                ? `${BASE_URL}/uploads/${product.image.replace(/\\/g, '/')}`
-                : '/default-image.png';
+                ? `${BASE_URL}/uploads/${product.image.replace(/\\/g, "/")}`
+                : "/default-image.png";
 
               return (
-                <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={product._id}>
-                  <div className="card h-100 border shadow-sm">
-                    <img
-                      src={imageUrl}
-                      alt={product.productName}
-                      className="card-img-top"
-                      style={{ height: '200px', objectFit: 'cover' }}
-                    />
-                    <div className="card-body d-flex flex-column">
-                      <h5 className="card-title fw-semibold">{product.productName}</h5>
-                      <p className="card-text text-muted mb-2">
-                        <del>₹{product.mrp}</del>{' '}
-                        <span className="text-dark fw-bold ms-2">₹{product.rate}</span>
-                      </p>
-                      <p className="text-muted small">Brand: {product.brand}</p>
-                      <button
-                        className="btn btn-outline-primary mt-auto"
-                        onClick={() => handleAddToCart(product._id)}
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
+                <div
+                  key={product._id}
+                  className="bg-white shadow rounded-lg overflow-hidden flex flex-col"
+                >
+                  <img
+                    src={imageUrl}
+                    alt={product.productName}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4 flex flex-col flex-grow">
+                    <h5 className="text-lg font-semibold mb-2">
+                      {product.productName}
+                    </h5>
+                    <p className="text-sm text-gray-500 mb-1">
+                      <del>₹{product.mrp}</del>{" "}
+                      <span className="text-gray-900 font-bold ml-2">
+                        ₹{product.rate}
+                      </span>
+                    </p>
+                    <p className="text-sm text-gray-500 mb-4">
+                      Brand: {product.brand}
+                    </p>
+                    <button
+                      onClick={() => handleAddToCart(product._id)}
+                      className="mt-auto border border-blue-500 text-blue-600 px-4 py-2 rounded hover:bg-sky-100 transition duration-200"
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* Pagination Controls */}
-          <nav className="mt-4">
-            <ul className="pagination justify-content-center">
-              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
-                  Previous
-                </button>
-              </li>
+          {/* Pagination */}
+          <div className="flex justify-center mt-8 space-x-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              className={`px-4 py-2 rounded border ${
+                currentPage === 1
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-700 hover:bg-gray-100"
+              }`}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
 
-              {Array.from({ length: totalPages }, (_, i) => (
-                <li
-                  key={i + 1}
-                  className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
-                >
-                  <button className="page-link" onClick={() => handlePageChange(i + 1)}>
-                    {i + 1}
-                  </button>
-                </li>
-              ))}
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => handlePageChange(i + 1)}
+                className={`px-4 py-2 rounded border ${
+                  currentPage === i + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
 
-              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
-                  Next
-                </button>
-              </li>
-            </ul>
-          </nav>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              className={`px-4 py-2 rounded border ${
+                currentPage === totalPages
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-700 hover:bg-gray-100"
+              }`}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </>
       )}
     </div>
