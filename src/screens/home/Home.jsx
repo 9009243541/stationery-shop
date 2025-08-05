@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MyCarousel from "../../component/MyCarousel";
 import ProductListingWrapper from "../product/list/ProductListingWrapper";
-
+import WorkSection from "../../MyComponent/WorkSection";
 const Home = () => {
   return (
     <div className="bg-white min-h-screen">
@@ -38,7 +38,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-
+      {/* Work Section */}
+      <WorkSection />
       <ProductListingWrapper />
 
       {/* Features Section */}

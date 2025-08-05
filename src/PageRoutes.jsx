@@ -18,6 +18,10 @@ import EditUserProfileWrapper from "./screens/users/EditUser/EditUserProfileWrap
 import Wishlist from "./MyComponent/Wishlist"; // Assuming this is the wishlist component
 // import ProductDetail from "./MyComponent/ProductDetails"; 
 
+
+
+import StationaryHome from "./Stationary/StationaryHome";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,7 +34,8 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/cart", element: <CartListWrapper /> },
       { path: "/category", element: <CategoryListWrapper /> },
-      { path: "/wishlist", element:  <Wishlist />}, 
+      { path: "/wishlist", element:  <Wishlist />},
+      { path: "/discounted-stationery", element: <StationaryHome /> }, 
       // { path: "/product-details", element:  <Wishlist />},// Assuming wishlist uses the same component
     ],
   },
