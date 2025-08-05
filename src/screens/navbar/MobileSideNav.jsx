@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { IconHeart, IconShoppingCartPlus, IconUser } from "@tabler/icons-react";
 
+import { motion } from "framer-motion"; // 👈 Add this
+
 const MobileSideNav = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
@@ -9,44 +11,52 @@ const MobileSideNav = ({ isOpen, onClose }) => {
     <>
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-60"
+        className="fixed inset-0 bg-black bg-opacity-50 z-[60]"
         onClick={onClose}
       ></div>
 
-      {/* Side Nav */}
-      <div className="fixed top-0 left-0 w-64 h-screen bg-yellow-100 dark:bg-gray-900 shadow-lg z-100 p-6 transition-transform transform md:hidden">
-        <div className="flex flex-col space-y-4 text-orange-700 dark:text-orange-300 font-medium">
-          <Link to="/" onClick={onClose} className="hover:text-orange-500">
+      {/* Side Nav Panel with Animation */}
+      <motion.div
+        initial={{ x: "-100%" }}
+        animate={{ x: "0%" }}
+        exit={{ x: "-100%" }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="fixed top-0 left-0 w-64 h-screen bg-emerald-50 dark:bg-slate-900 text-slate-800 dark:text-white shadow-lg z-[100] p-6 md:hidden"
+      >
+        <div className="flex flex-col space-y-5 font-medium text-lg">
+          <Link to="/" onClick={onClose} className="hover:text-emerald-600">
             Home
           </Link>
-          <Link to="/product" onClick={onClose} className="hover:text-orange-500">
+          <Link to="/product" onClick={onClose} className="hover:text-emerald-600">
             Products
           </Link>
-          <Link to="/about" onClick={onClose} className="hover:text-orange-500">
+          <Link to="/about" onClick={onClose} className="hover:text-emerald-600">
             About
           </Link>
-          <Link to="/contact" onClick={onClose} className="hover:text-orange-500">
+          <Link to="/contact" onClick={onClose} className="hover:text-emerald-600">
             Contact
           </Link>
-          <Link to="/category" onClick={onClose} className="hover:text-orange-500">
+          <Link to="/category" onClick={onClose} className="hover:text-emerald-600">
             Category
           </Link>
 
-          <div className="flex gap-6 pt-4 border-t border-orange-300 dark:border-orange-500">
-            <Link to="/wishlist" onClick={onClose} className="hover:text-orange-500">
-              < IconHeart size={24} />
+          {/* Icons */}
+          <div className="flex justify-start gap-6 pt-6 border-t border-gray-300 dark:border-gray-600">
+            <Link to="/wishlist" onClick={onClose} className="hover:text-emerald-600">
+              <IconHeart size={24} />
             </Link>
-            <Link to="/cart" onClick={onClose} className="hover:text-orange-500">
+            <Link to="/cart" onClick={onClose} className="hover:text-emerald-600">
               <IconShoppingCartPlus size={24} />
             </Link>
-            <Link to="/user" onClick={onClose} className="hover:text-orange-500">
+            <Link to="/user-profile" onClick={onClose} className="hover:text-emerald-600">
               <IconUser size={24} />
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };
+
 
 export default MobileSideNav;

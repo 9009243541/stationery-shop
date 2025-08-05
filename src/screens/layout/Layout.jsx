@@ -4,6 +4,7 @@ import Navbar from "../navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import SecondaryNavbar from "../navbar/SecondaryNavbar";
 import CategoryHighlights from "../navbar/CategoryHighlights";
+import Footer from "../footer/Footer";
 
 const Layout = () => {
   return (
@@ -14,6 +15,7 @@ const Layout = () => {
       <main>
         <Outlet />
       </main>
+      <Footer/>
     </div>
   );
 };

@@ -11,12 +11,12 @@ const SecondaryNavbar = () => {
   };
 
   return (
-    <div className="relative bg-black text-white py-3 px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div className="relative bg-slate-800 text-white py-4 px-6 flex flex-col md:flex-row items-center justify-between gap-4 flex-wrap">
       {/* Categories Dropdown Button */}
       <div className="relative">
         <button
           onClick={toggleDropdown}
-          className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded flex items-center gap-2"
+          className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded flex items-center gap-2 hover:bg-yellow-300 transition-colors"
         >
           <IconMenu2 size={18} />
           <span>SHOP BY CATEGORIES</span>
@@ -31,7 +31,7 @@ const SecondaryNavbar = () => {
                 {categoryData?.data?.map((category) => (
                   <li
                     key={category._id}
-                    className="px-4 py-3 hover:bg-gray-100 cursor-pointer transition-all"
+                    className="px-4 py-3 hover:bg-emerald-50 text-sm cursor-pointer transition-all"
                   >
                     {category.categoryname}
                   </li>
@@ -43,13 +43,13 @@ const SecondaryNavbar = () => {
       </div>
 
       {/* Search Input */}
-      <div className="flex items-center border border-gray-400 rounded overflow-hidden w-full md:w-1/2">
+      <div className="flex items-center border border-gray-400 rounded overflow-hidden w-full md:w-1/2 bg-white">
         <input
           type="text"
           placeholder="Search the store"
           className="w-full px-4 py-2 text-black outline-none"
         />
-        <button className="bg-white px-4 py-2 text-black flex items-center gap-2 font-semibold">
+        <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 flex items-center gap-2 font-semibold transition-colors">
           <IconSearch size={18} />
           Search
         </button>
@@ -58,10 +58,10 @@ const SecondaryNavbar = () => {
       {/* WhatsApp + Order */}
       <div className="flex items-center gap-4">
         <div className="text-sm text-left">
-          <span className="block font-bold">Whatsapp:</span>
+          <span className="block font-bold text-white">WhatsApp:</span>
           <span className="text-yellow-400">1-999-564-666</span>
         </div>
-        <button className="bg-white text-black px-4 py-2 rounded font-semibold whitespace-nowrap">
+        <button className="bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded font-semibold whitespace-nowrap transition-colors">
           Order $99
         </button>
       </div>
