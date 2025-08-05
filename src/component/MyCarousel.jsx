@@ -13,8 +13,12 @@ const MyCarousel = () => {
       src: "./images/girl_with_notbook.jpg",
       alt: "Slide 2",
     },
+    // {
+    //   src: "https://i.pinimg.com/736x/61/19/33/61193324b96e1e87736220a58dfa63d5.jpg",
+    //   alt: "Slide 3",
+    // },
     {
-      src: "https://i.pinimg.com/736x/61/19/33/61193324b96e1e87736220a58dfa63d5.jpg",
+      src: "./images/slide-ngo-2.webp",
       alt: "Slide 3",
     },
   ];
