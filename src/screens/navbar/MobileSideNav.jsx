@@ -1,62 +1,122 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { IconHeart, IconShoppingCartPlus, IconUser } from "@tabler/icons-react";
+import {
+  IconHome,
+  IconInfoCircle,
+  IconShoppingCart,
+  IconPhone,
+  IconCategory,
+  IconHeart,
+  IconShoppingCartPlus,
+  IconUser,
+  IconLogout,
+  IconX,
+} from "@tabler/icons-react";
+import { motion } from "framer-motion";
 
-import { motion } from "framer-motion"; // 👈 Add this
+const navItems = [
+  { label: "Home", to: "/", icon: IconHome },
+  { label: "Products", to: "/product", icon: IconShoppingCart },
+  { label: "About", to: "/about", icon: IconInfoCircle },
+  { label: "Contact", to: "/contact", icon: IconPhone },
+  { label: "Category", to: "/category", icon: IconCategory },
+];
+
+const bottomIcons = [
+  { label: "Wishlist", to: "/wishlist", icon: IconHeart },
+  { label: "Cart", to: "/cart", icon: IconShoppingCartPlus },
+  { label: "Profile", to: "/user-profile", icon: IconUser },
+];
 
 const MobileSideNav = ({ isOpen, onClose }) => {
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
     <>
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-[60]"
+        className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm z-[60]"
         onClick={onClose}
       ></div>
 
-      {/* Side Nav Panel with Animation */}
+      {/* Side Nav */}
       <motion.div
         initial={{ x: "-100%" }}
         animate={{ x: "0%" }}
         exit={{ x: "-100%" }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="fixed top-0 left-0 w-64 h-screen bg-emerald-50 dark:bg-slate-900 text-slate-800 dark:text-white shadow-lg z-[100] p-6 md:hidden"
+        className="fixed top-0 left-0 w-[85%] max-w-[300px] h-screen bg-white text-[#1e1e1e] shadow-2xl z-[100] flex flex-col justify-between"
       >
-        <div className="flex flex-col space-y-5 font-medium text-lg">
-          <Link to="/" onClick={onClose} className="hover:text-emerald-600">
-            Home
+        {/* Top Header */}
+        <div className="p-5 pb-3 flex items-center justify-between border-b border-gray-200">
+          <Link to="/" onClick={onClose} className="flex items-center gap-3">
+            <img
+              src="./images/aa.png"
+              alt="AV Foundation"
+              className="w-10 h-10 rounded object-cover"
+            />
+            <div>
+              <h1 className="text-[#1e4f91] font-bold text-[17px] font-serif">
+                AV Foundation
+              </h1>
+            </div>
           </Link>
-          <Link to="/product" onClick={onClose} className="hover:text-emerald-600">
-            Products
-          </Link>
-          <Link to="/about" onClick={onClose} className="hover:text-emerald-600">
-            About
-          </Link>
-          <Link to="/contact" onClick={onClose} className="hover:text-emerald-600">
-            Contact
-          </Link>
-          <Link to="/category" onClick={onClose} className="hover:text-emerald-600">
-            Category
-          </Link>
+          <button onClick={onClose}>
+            <IconX size={24} className="text-[#1e4f91]" />
+          </button>
+        </div>
 
+        {/* Navigation Links */}
+        <nav className="flex-1 p-5 pt-4 space-y-2">
+          {navItems.map(({ label, to, icon: Icon }) => (
+            <Link
+              key={to}
+              to={to}
+              onClick={onClose}
+              className="flex items-center gap-3 p-3 rounded-lg text-[#1e1e1e] hover:bg-[#f0f4f3] hover:shadow transition-all duration-200"
+            >
+              <Icon size={20} className="text-[#206577]" />
+              <span className="text-sm font-medium">{label}</span>
+            </Link>
+          ))}
+        </nav>
+
+        {/* Bottom Section */}
+        <div className="p-5 pt-0 border-t border-gray-200 space-y-4">
           {/* Icons */}
-          <div className="flex justify-start gap-6 pt-6 border-t border-gray-300 dark:border-gray-600">
-            <Link to="/wishlist" onClick={onClose} className="hover:text-emerald-600">
-              <IconHeart size={24} />
-            </Link>
-            <Link to="/cart" onClick={onClose} className="hover:text-emerald-600">
-              <IconShoppingCartPlus size={24} />
-            </Link>
-            <Link to="/user-profile" onClick={onClose} className="hover:text-emerald-600">
-              <IconUser size={24} />
-            </Link>
+          <div className="flex gap-6">
+            {bottomIcons.map(({ to, icon: Icon, label }) => (
+              <Link
+                key={to}
+                to={to}
+                onClick={onClose}
+                className="hover:text-[#206577] transition-colors"
+              >
+                <Icon size={24} />
+              </Link>
+            ))}
           </div>
+
+          {/* Logout Button */}
+          <Link
+            to="/logout"
+            onClick={onClose}
+            className="flex items-center gap-3 mt-4 p-3 rounded-lg bg-[#f1b71c] hover:bg-[#e0a70b] text-white justify-center transition-all"
+          >
+            <IconLogout size={20} />
+            <span className="text-sm font-semibold">Log Out</span>
+          </Link>
         </div>
       </motion.div>
     </>
   );
 };
-
 
 export default MobileSideNav;

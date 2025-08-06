@@ -43,18 +43,28 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
-
+  const isOnDiscountedStationery =
+    location.pathname === "/discounted-stationery";
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem("token"));
   }, []);
 
   const navLinks = [
     { to: "/", label: "Home" },
-    { to: "/product", label: "Products" },
-    { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" },
-    { to: "/category", label: "Category" },
+    // { to: "/product", label: "Products" },
+    { to: "/about", label: "About Us" },
+    { to: "/contact", label: "Contact Us" },
+    { to: "/blogs", label: "Blogs" },
+    // { to: "/category", label: "Category" },
   ];
+  if (isOnDiscountedStationery) {
+    navLinks.splice(
+      1,
+      0,
+      { to: "/category", label: "Category" },
+      { to: "/product", label: "Products" }
+    );
+  }
 
   return (
     <nav className="bg-white border-b border-gray-300 shadow-md py-3 px-6 sticky top-0 z-50">
