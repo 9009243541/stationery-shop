@@ -113,12 +113,10 @@ const CartList = () => {
         ))}
       </div>
 
-      <button
-        className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2 rounded mt-6 w-full sm:w-auto"
-        onClick={placeOrder}
-        disabled={placingOrder}
-      >
-        {placingOrder ? 'Placing Order...' : 'Place Order'}
+      <button className="btn btn-primary mt-3">
+       
+        Procedd to checkout
+
       </button>
     </div>
   );

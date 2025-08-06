@@ -17,6 +17,7 @@ const ProductListing = ({
   const [quantities, setQuantities] = useState({});
   const [wishlist, setWishlist] = useState({});
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const token = localStorage.getItem("token");
   const BASE_URL = "https://tbtdj99v-3300.inc1.devtunnels.ms";
@@ -67,7 +68,6 @@ const ProductListing = ({
         }
       );
 
-      console.log("Add to cart success:", response.data);
       toast.success("🛒 Added to cart!", { position: "bottom-right" });
     } catch (error) {
       console.error("Add to cart error:", error);
@@ -79,6 +79,17 @@ const ProductListing = ({
     item.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const itemsPerPage = 12;
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const currentItems = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) setCurrentPage(newPage);
+  };
+
   if (!filteredProducts.length) {
     return (
       <p className="text-center text-lg text-gray-600 mt-10">
@@ -89,17 +100,18 @@ const ProductListing = ({
 
   return (
     <div className="px-4 py-6 relative">
-      {/* Toast container */}
       <ToastContainer />
 
-      {/* Header */}
       <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
         <h1 className="text-3xl font-extrabold text-gray-800">Products</h1>
         <div className="w-full sm:w-[300px]">
           <AtmSearchField
             name="search"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1); // reset to page 1 when searching
+            }}
             placeholder="Search products..."
           />
         </div>
@@ -107,7 +119,7 @@ const ProductListing = ({
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filteredProducts.map((item) => {
+        {currentItems.map((item) => {
           const quantity = quantities[item.id] || 1;
           const discountedPrice = item.price - (item.discount || 0);
           const discountPercent = item.discount
@@ -120,14 +132,12 @@ const ProductListing = ({
               className="relative bg-white shadow rounded-xl overflow-hidden transition hover:shadow-lg p-3 flex flex-col cursor-pointer"
               onClick={() => setSelectedProduct(item)}
             >
-              {/* Discount Badge */}
               {item.discount && (
                 <span className="absolute top-2 left-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-bl-md rounded-tr-md z-10">
                   {discountPercent}% OFF
                 </span>
               )}
 
-              {/* Wishlist Icon */}
               <button
                 className="absolute top-2 right-2 bg-white p-1 rounded-full z-10 hover:bg-red-100"
                 onClick={(e) => toggleWishlist(e, item.id)}
@@ -139,14 +149,12 @@ const ProductListing = ({
                 )}
               </button>
 
-              {/* Product Image */}
               <img
                 src={item.image || "/default-image.png"}
                 alt={item.name}
                 className="w-full h-36 object-contain bg-gray-50 rounded-md"
               />
 
-              {/* Product Info */}
               <div className="mt-3 flex-grow flex flex-col justify-between">
                 <div>
                   <span>{item._id}</span>
@@ -174,7 +182,6 @@ const ProductListing = ({
                   </div>
                 </div>
 
-                {/* Quantity and Add to Cart */}
                 <div className="mt-4 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <button
@@ -205,7 +212,6 @@ const ProductListing = ({
                     className="flex items-center gap-1 border border-red-500 text-red-500 text-sm rounded px-3 py-1.5 hover:bg-red-50 transition"
                   >
                     <FaShoppingCart size={16} />
-                    Add to Cart
                   </button>
                 </div>
               </div>
@@ -214,7 +220,29 @@ const ProductListing = ({
         })}
       </div>
 
-      {/* Product Drawer */}
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-4 mt-8">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="font-medium">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
+
       {selectedProduct && (
         <ProductDetailsDrawer
           open={!!selectedProduct}

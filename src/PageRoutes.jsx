@@ -21,6 +21,7 @@ import Wishlist from "./MyComponent/Wishlist"; // Assuming this is the wishlist 
 
 
 import StationaryHome from "./Stationary/StationaryHome";
+import Checkout from "./MyComponent/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -35,8 +36,8 @@ const router = createBrowserRouter([
       { path: "/cart", element: <CartListWrapper /> },
       { path: "/category", element: <CategoryListWrapper /> },
       { path: "/wishlist", element:  <Wishlist />},
-      { path: "/discounted-stationery", element: <StationaryHome /> }, 
-      // { path: "/product-details", element:  <Wishlist />},// Assuming wishlist uses the same component
+      { path: "/discounted-stationery", element: <StationaryHome /> },
+      { path: "/checkout", element: <Checkout /> },
     ],
   },
   { path: "/user", element: <UserNavigate /> },
