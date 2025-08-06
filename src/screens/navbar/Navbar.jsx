@@ -43,20 +43,23 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const { pathname } = location;
+
   const isOnDiscountedStationery =
-    location.pathname === "/discounted-stationery";
+    pathname.startsWith("/discounted-stationery") || pathname === "/checkout";
+
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem("token"));
   }, []);
 
   const navLinks = [
     { to: "/", label: "Home" },
-    // { to: "/product", label: "Products" },
     { to: "/about", label: "About Us" },
     { to: "/contact", label: "Contact Us" },
     { to: "/blogs", label: "Blogs" },
-    // { to: "/category", label: "Category" },
   ];
+
+  // Dynamically inject links if user is on discounted-stationery pages
   if (isOnDiscountedStationery) {
     navLinks.splice(
       1,
@@ -84,7 +87,6 @@ const Navbar = () => {
             <p className="text-[#f1b71c] text-[11px] sm:text-[12px] italic font-medium tracking-wide">
               Nourishing Lives with Purpose
             </p>
-            {/* Tooltip aligned to the left */}
             <span className="absolute top-full left-0 mt-1 hidden group-hover:block bg-black text-white text-xs px-3 py-1 rounded shadow-lg z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               Acharya Vidhyasagar Foundation
             </span>
@@ -103,7 +105,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-6 font-semibold text-sm sm:text-[15px]">
           {navLinks.map(({ to, label }) => {
-            const isActive = location.pathname === to;
+            const isActive = pathname === to;
             return (
               <li key={to} className="relative group">
                 <Link
@@ -126,13 +128,21 @@ const Navbar = () => {
 
         {/* Desktop Icons */}
         <div className="hidden md:flex gap-4 items-center">
-          <NavIcon to="/discounted-stationery/wishlist" icon={IconHeart} label="Wishlist" />
+          <NavIcon
+            to="/discounted-stationery/wishlist"
+            icon={IconHeart}
+            label="Wishlist"
+          />
           {isLoggedIn ? (
             <NavIcon to="/user-profile" icon={IconUser} label="Profile" />
           ) : (
             <NavIcon to="/login" icon={IconUserCog} label="Login" />
           )}
-          <NavIcon to="/discounted-stationery/cart" icon={IconShoppingCartPlus} label="Cart" />
+          <NavIcon
+            to="/discounted-stationery/cart"
+            icon={IconShoppingCartPlus}
+            label="Cart"
+          />
         </div>
       </div>
 
