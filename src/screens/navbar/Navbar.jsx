@@ -61,8 +61,8 @@ const Navbar = () => {
     navLinks.splice(
       1,
       0,
-      { to: "/category", label: "Category" },
-      { to: "/product", label: "Products" }
+      { to: "/discounted-stationery/category", label: "Category" },
+      { to: "/discounted-stationery/product", label: "Products" }
     );
   }
 
@@ -126,13 +126,13 @@ const Navbar = () => {
 
         {/* Desktop Icons */}
         <div className="hidden md:flex gap-4 items-center">
-          <NavIcon to="/wishlist" icon={IconHeart} label="Wishlist" />
+          <NavIcon to="/discounted-stationery/wishlist" icon={IconHeart} label="Wishlist" />
           {isLoggedIn ? (
             <NavIcon to="/user-profile" icon={IconUser} label="Profile" />
           ) : (
             <NavIcon to="/login" icon={IconUserCog} label="Login" />
           )}
-          <NavIcon to="/cart" icon={IconShoppingCartPlus} label="Cart" />
+          <NavIcon to="/discounted-stationery/cart" icon={IconShoppingCartPlus} label="Cart" />
         </div>
       </div>
 
