@@ -210,10 +210,14 @@ const ProductListing = ({
                       addToCart(item.id, quantity);
                     }}
                     className="flex items-center gap-1 border border-red-500 text-red-500 text-sm rounded px-3 py-1.5 hover:bg-red-50 transition"
-                  >
+                     >
                     <FaShoppingCart size={16} />
                   </button>
                 </div>
+                {/* <button className="mt-3 bg-blue-600 text-white text-sm font-semibold rounded px-4 py-2 hover:bg-blue-700 transition">
+                  place order 
+                </button> */}
+
               </div>
             </div>
           );

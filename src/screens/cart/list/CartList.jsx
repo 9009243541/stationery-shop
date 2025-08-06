@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const BASE_URL = 'https://tbtdj99v-3300.inc1.devtunnels.ms';
 
 const CartList = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [placingOrder, setPlacingOrder] = useState(false);
+  const navigate = useNavigate();
 
   const fetchCartItems = async () => {
     try {
@@ -45,30 +46,6 @@ const CartList = () => {
     } catch (error) {
       console.error('Error removing item:', error.response?.data || error.message);
       toast.error('❌ Failed to remove item from cart');
-    }
-  };
-
-  const placeOrder = async () => {
-    try {
-      setPlacingOrder(true);
-      const token = localStorage.getItem('token');
-      await axios.post(
-        `${BASE_URL}/order/place`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setCartItems([]);
-      toast.success('✅ Order placed successfully!');
-    } catch (error) {
-      console.error('Error placing order:', error.response?.data || error.message);
-      toast.error('❌ Failed to place order');
-    } finally {
-      setPlacingOrder(false);
     }
   };
 
@@ -113,11 +90,15 @@ const CartList = () => {
         ))}
       </div>
 
-      <button className="btn btn-primary mt-3">
-       
-        Procedd to checkout
-
-      </button>
+      {/* ✅ Proceed to Checkout Button */}
+      <div className="mt-8 text-right">
+        <button
+          onClick={() => navigate('/checkout')}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded text-sm font-medium transition"
+        >
+          Proceed to Checkout
+        </button>
+      </div>
     </div>
   );
 };

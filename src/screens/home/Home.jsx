@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import MyCarousel from "../../component/MyCarousel";
 import ProductListingWrapper from "../product/list/ProductListingWrapper";
 import WorkSection from "../../MyComponent/WorkSection";
+import HowHelpSection from "../../MyComponent/HowHelpSection";
+import AboutSection from "../../MyComponent/AboutSection";
 const Home = () => {
   return (
     <div className="bg-white min-h-screen">
@@ -40,10 +42,12 @@ const Home = () => {
       </section>
       {/* Work Section */}
       <WorkSection />
-      <ProductListingWrapper />
+      {/* <ProductListingWrapper /> */}
+      <HowHelpSection />
+      <AboutSection />
 
       {/* Features Section */}
-      <section className="py-16 px-4 bg-gray-50">
+      {/* <section className="py-16 px-4 bg-gray-50">
         <div className="container mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl font-semibold text-blue-800 mb-10">
             Why Choose Us?
@@ -75,10 +79,10 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
-      <section className="py-12 px-4 bg-blue-600 text-white text-center">
+      {/* <section className="py-12 px-4 bg-blue-600 text-white text-center">
         <div className="container mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">
             Start Shopping Today!
@@ -93,7 +97,7 @@ const Home = () => {
             View Products
           </Link>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
