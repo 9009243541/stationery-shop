@@ -5,6 +5,7 @@ import ProductListingWrapper from "../product/list/ProductListingWrapper";
 import WorkSection from "../../MyComponent/WorkSection";
 import HowHelpSection from "../../MyComponent/HowHelpSection";
 import AboutSection from "../../MyComponent/AboutSection";
+import HowWeWork from "../../MyComponent/howWeWork";
 const Home = () => {
   return (
     <div className="bg-white min-h-screen">
@@ -23,7 +24,7 @@ const Home = () => {
               students, artists & offices.
             </p>
             <Link
-              to="/product"
+              to="/discounted-stationery"
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
             >
               Shop Now
@@ -44,6 +45,7 @@ const Home = () => {
       <WorkSection />
       {/* <ProductListingWrapper /> */}
       <HowHelpSection />
+      <HowWeWork />
       <AboutSection />
 
       {/* Features Section */}
