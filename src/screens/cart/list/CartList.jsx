@@ -93,7 +93,7 @@ const CartList = () => {
       {/* ✅ Proceed to Checkout Button */}
       <div className="mt-8 text-right">
         <button
-          onClick={() => navigate('/checkout')}
+          onClick={() => navigate('/discounted-stationery/checkout')}
           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded text-sm font-medium transition"
         >
           Proceed to Checkout

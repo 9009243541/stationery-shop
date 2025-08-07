@@ -17,11 +17,10 @@ import OtpWithPhoneWrapper from "./screens/otpWithPhone/OtpWithPhoneWrapper";
 import EditUserProfileWrapper from "./screens/users/EditUser/EditUserProfileWrapper";
 import Wishlist from "./MyComponent/Wishlist"; // Assuming this is the wishlist component
 // import ProductDetail from "./MyComponent/ProductDetails"; 
-
-
-
 import StationaryHome from "./Stationary/StationaryHome";
-import Checkout from "./MyComponent/Checkout";
+import Checkout from "./screens/checkout/Checkout";
+import ThankYou from "./screens/thank-you/ThankYou";
+import CheckoutWrapper from "./screens/checkout/CheckoutWrapper";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +36,8 @@ const router = createBrowserRouter([
       { path: "/discounted-stationery/category", element: <CategoryListWrapper /> },
       { path: "/discounted-stationery/wishlist", element:  <Wishlist />},
       { path: "/discounted-stationery", element: <StationaryHome /> },
-      { path: "/discounted-stationery/checkout", element: <Checkout /> },
+      { path: "/discounted-stationery/checkout", element: <CheckoutWrapper /> },
+      { path: "/thank-you", element: <ThankYou /> },
     ],
   },
   { path: "/user", element: <UserNavigate /> },
