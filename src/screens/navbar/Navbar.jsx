@@ -54,9 +54,14 @@ const Navbar = () => {
 
   const navLinks = [
     { to: "/", label: "Home" },
-    { to: "/about", label: "About Us" },
-    { to: "/contact", label: "Contact Us" },
+    { to: "/about", label: "About Us" }, 
+    { to: "/galary", label: "Galary" },
+    { to: "/our-reach", label: "Our Reach" },
+    { to: "/impact-reports", label: "Imapact Reports" },
     { to: "/blogs", label: "Blogs" },
+    { to: "/contact", label: "Contact Us" },
+    
+   
   ];
 
   // Dynamically inject links if user is on discounted-stationery pages

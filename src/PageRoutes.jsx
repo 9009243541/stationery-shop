@@ -17,6 +17,10 @@ import OtpWithPhoneWrapper from "./screens/otpWithPhone/OtpWithPhoneWrapper";
 import EditUserProfileWrapper from "./screens/users/EditUser/EditUserProfileWrapper";
 import Wishlist from "./MyComponent/Wishlist"; // Assuming this is the wishlist component
 // import ProductDetail from "./MyComponent/ProductDetails"; 
+
+import FreeCopyDistribution from "./FreeCopyDistribution/FreeCopyDistribution";
+// Assuming this is the FreeCopyDistribution component
+
 import StationaryHome from "./Stationary/StationaryHome";
 import Checkout from "./screens/checkout/Checkout";
 import ThankYou from "./screens/thank-you/ThankYou";
@@ -38,6 +42,9 @@ const router = createBrowserRouter([
       { path: "/discounted-stationery", element: <StationaryHome /> },
       { path: "/discounted-stationery/checkout", element: <CheckoutWrapper /> },
       { path: "/thank-you", element: <ThankYou /> },
+      { path: "/discounted-stationery/checkout", element: <Checkout /> },
+      
+      { path: "/free-distribution", element: <FreeCopyDistribution /> },
     ],
   },
   { path: "/user", element: <UserNavigate /> },

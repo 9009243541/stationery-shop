@@ -1,9 +1,12 @@
 import React from "react";
-// import image01 from "../../public/images/AV_about.jpeg";
-
 const AboutSection = () => {
   return (
-    <section className="py-5 bg-light text-center">
+    <section
+      className="py-5 text-dark"
+      style={{
+        background: "linear-gradient(to bottom, #fefefe, #f3f4f6)",
+      }}
+    >
       <div className="container">
         <div className="row justify-content-center align-items-center">
           <div className="col-lg-6 mb-4">
