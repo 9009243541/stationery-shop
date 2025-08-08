@@ -16,7 +16,7 @@ import UserProfileWrapper from "./screens/users/UserProfile/UserProfileWrapper";
 import OtpWithPhoneWrapper from "./screens/otpWithPhone/OtpWithPhoneWrapper";
 import EditUserProfileWrapper from "./screens/users/EditUser/EditUserProfileWrapper";
 import Wishlist from "./MyComponent/Wishlist"; // Assuming this is the wishlist component
-// import ProductDetail from "./MyComponent/ProductDetails"; 
+// import ProductDetail from "./MyComponent/ProductDetails";
 
 import FreeCopyDistribution from "./FreeCopyDistribution/FreeCopyDistribution";
 // Assuming this is the FreeCopyDistribution component
@@ -25,6 +25,7 @@ import StationaryHome from "./Stationary/StationaryHome";
 import Checkout from "./screens/checkout/Checkout";
 import ThankYou from "./screens/thank-you/ThankYou";
 import CheckoutWrapper from "./screens/checkout/CheckoutWrapper";
+import NotFound from "./component/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -32,19 +33,26 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/", element: <HomeListWrapper /> },
-      { path: "/discounted-stationery/product", element: <ProductListingWrapper /> },
-   
+      {
+        path: "/discounted-stationery/product",
+        element: <ProductListingWrapper />,
+      },
+
       { path: "/about", element: <AboutUs /> },
       { path: "/contact", element: <Contact /> },
       { path: "/discounted-stationery/cart", element: <CartListWrapper /> },
-      { path: "/discounted-stationery/category", element: <CategoryListWrapper /> },
-      { path: "/discounted-stationery/wishlist", element:  <Wishlist />},
+      {
+        path: "/discounted-stationery/category",
+        element: <CategoryListWrapper />,
+      },
+      { path: "/discounted-stationery/wishlist", element: <Wishlist /> },
       { path: "/discounted-stationery", element: <StationaryHome /> },
       { path: "/discounted-stationery/checkout", element: <CheckoutWrapper /> },
       { path: "/thank-you", element: <ThankYou /> },
       { path: "/discounted-stationery/checkout", element: <Checkout /> },
-      
+
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
   { path: "/user", element: <UserNavigate /> },
@@ -54,6 +62,7 @@ const router = createBrowserRouter([
   { path: "/register", element: <UserRegisterWrapper /> },
   { path: "/login", element: <UserLoginWrapper /> },
   { path: "/user-profile", element: <UserProfileWrapper /> },
+  { path: "*", element: <NotFound /> },
 ]);
 const PageRoutes = () => {
   return <RouterProvider router={router} />;
