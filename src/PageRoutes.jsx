@@ -60,6 +60,7 @@ const router = createBrowserRouter([
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
+      {path: "/our-reach", element: <OurReach />}, // Added route for OurReach component  
     ],
   },
   { path: "/user", element: <UserNavigate /> },

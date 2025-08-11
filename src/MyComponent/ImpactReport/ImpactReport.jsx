@@ -1,62 +1,70 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;// replace with your backend base URL
-
-const ImpactReport = () => {
+const ImpactReports = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchReports = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/impact-reports/get-all`);
-      setReports(res.data.data || []);
-    } catch (err) {
-      console.error("Error fetching impact reports", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchReports();
+    fetch("https://tbtdj99v-3300.inc1.devtunnels.ms/impact-reports/get-all")
+      .then((res) => res.json())
+      .then((data) => {
+        setReports(data.data || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          fontSize: "20px",
+          fontWeight: "bold",
+        }}
+      >
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="container py-5">
-      <h2 className="text-center mb-4">Impact Reports</h2>
-      {loading ? (
-        <p className="text-center">Loading...</p>
-      ) : reports.length === 0 ? (
-        <p className="text-center">No impact reports available.</p>
-      ) : (
-        <div className="row">
-          {reports.map((report) => (
-            <div className="col-md-4 mb-4" key={report._id}>
-              <div className="card h-100">
-                <div className="card-body">
-                  <h5 className="card-title">{report.title || "Untitled Report"}</h5>
-                  <p className="card-text">
-                    {report.description || "No description available."}
-                  </p>
-                </div>
-                <div className="card-footer">
-                  <a
-                    href={`${BASE_URL}/uploads/impact-reports/${report.file}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary w-100"
-                  >
-                    View / Download
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+      }}
+    >
+      <h1 style={{ textAlign: "center", marginBottom:"20px" }}><b>Impact Reports</b></h1>
+
+      {reports.map((report) => (
+        <div
+          key={report._id}
+          style={{
+            border: "1px solid #ccc",
+            padding: "20px",
+            margin: "10px",
+            width: "100%",
+            maxWidth: "500px",
+            borderRadius: "8px",
+            textAlign: "center",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+          }}
+        >
+          <h2>{report.title}</h2>
+          <p>{report.description}</p>
         </div>
-      )}
+      ))}
     </div>
   );
 };
 
-export default ImpactReport;
+export default ImpactReports;
+

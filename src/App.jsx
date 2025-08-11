@@ -6,6 +6,8 @@ import { ToastContainer } from "react-toastify";
 import AtmLoader from "./component/atom/AtmLoader";
 // import "react-toastify/dist/ReactToastify.css";
 // import AtmLoader from "./components/AtmLoader";
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 const App = () => {
   return (
     <div>
