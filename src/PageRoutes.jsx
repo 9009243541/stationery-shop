@@ -13,7 +13,7 @@ import OtpWithEmailWrapper from "./screens/otpWithEmail/OtpWithEmailWrapper";
 import UserNavigate from "./screens/users/UserNavigate";
 import UserRegisterWrapper from "./screens/users/UserRegister/UserRegisterWrapper";
 import UserProfileWrapper from "./screens/users/UserProfile/UserProfileWrapper";
-import OtpWithPhoneWrapper from "./screens/otpWithPhone/OtpWithPhoneWrapper";
+// import OtpWithPhoneWrapper from "./screens/otpWithPhone/OtpWithPhoneWrapper";
 import EditUserProfileWrapper from "./screens/users/EditUser/EditUserProfileWrapper";
 import Wishlist from "./MyComponent/Wishlist"; // Assuming this is the wishlist component
 // import ProductDetail from "./MyComponent/ProductDetails";
@@ -28,8 +28,8 @@ import CheckoutWrapper from "./screens/checkout/CheckoutWrapper";
 import NotFound from "./component/NotFound";
 import Gallary from "./MyComponent/Gallary/Gallary"; // Importing the Gallery component
 import ImpactReport from "./MyComponent/ImpactReport/ImpactReport"; // Importing the ImpactReport component
-import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
 import OurReachWrapper from "./screens/ourReach/OurReachWrapper";
+import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       { path: "/galary", element: <Gallary /> },
       { path: "/blogs", element: <BlogListingWrapper /> },
       { path: "/our-reach", element: <OurReachWrapper /> },
-      {path: "/impact-reports", element: <ImpactReport />}, // Added route for Gallery  
+      { path: "/impact-reports", element: <ImpactReport /> },
       { path: "/contact", element: <Contact /> },
       { path: "/discounted-stationery/cart", element: <CartListWrapper /> },
       {
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
-      {path: "/our-reach", element: <OurReach />}, // Added route for OurReach component  
+      // Added route for OurReach component
     ],
   },
   { path: "/user", element: <UserNavigate /> },

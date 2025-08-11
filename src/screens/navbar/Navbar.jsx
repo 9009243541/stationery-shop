@@ -54,14 +54,12 @@ const Navbar = () => {
 
   const navLinks = [
     { to: "/", label: "Home" },
-    { to: "/about", label: "About Us" }, 
+    { to: "/about", label: "About Us" },
     { to: "/galary", label: "Galary" },
     { to: "/our-reach", label: "Our Reach" },
     { to: "/impact-reports", label: "Imapact Reports" },
     { to: "/blogs", label: "Blogs" },
     { to: "/contact", label: "Contact Us" },
-    
-   
   ];
 
   // Dynamically inject links if user is on discounted-stationery pages
@@ -104,7 +102,7 @@ const Navbar = () => {
           className="md:hidden text-[#1e4f91] transition-transform hover:scale-110"
           onClick={() => setIsMobileMenuOpen((prev) => !prev)}
         >
-          {isMobileMenuOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
+          {isMobileMenuOpen ? "" : <IconMenu2 size={24} />}
         </button>
 
         {/* Desktop Navigation */}

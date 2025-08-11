@@ -28,36 +28,42 @@ const Gallery = () => {
   }, []);
 
   return (
-   <div className="container py-5">
-  <h2 className="text-center mb-4">Our Gallery</h2>
+    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-10">
+        Our Gallery
+      </h2>
 
-  {loading ? (
-    <p className="text-center">Loading gallery...</p>
-  ) : images.length === 0 ? (
-    <p className="text-center">No images found.</p>
-  ) : (
-    <div className="row">
-      {images.map((item) => (
-        <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={item._id}>
-          <div className="card shadow-sm h-100">
-            <img
-              src={`${IMAGE_URL}${item.image}`}
-              alt="Gallery"
-              className="card-img-top"
-              style={{ objectFit: 'cover', height: '200px' }}
-            />
-            {item.description && (
-              <div className="card-body">
-                <p className="card-text text-muted">{item.description}</p>
-              </div>
-            )}
-          </div>
+      {loading ? (
+        <p className="text-center text-gray-500 text-lg animate-pulse">
+          Loading gallery...
+        </p>
+      ) : images.length === 0 ? (
+        <p className="text-center text-gray-500 text-lg">No images found.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {images.map((item) => (
+            <div
+              key={item._id}
+              className="relative group overflow-hidden rounded-xl shadow-lg cursor-pointer transform transition-transform duration-300 hover:scale-105"
+            >
+              <img
+                src={`${IMAGE_URL}${item.image}`}
+                alt={item.description || 'Gallery image'}
+                className="w-full h-56 object-cover"
+              />
+              {/* Overlay on hover */}
+              {item.description && (
+                <div className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center px-4">
+                  <p className="text-white text-center text-sm md:text-base font-medium">
+                    {item.description}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
-  )}
-</div>
-
   );
 };
 

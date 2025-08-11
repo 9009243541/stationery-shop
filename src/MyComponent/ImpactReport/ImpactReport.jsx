@@ -16,55 +16,29 @@ const ImpactReports = () => {
 
   if (loading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          fontSize: "20px",
-          fontWeight: "bold",
-        }}
-      >
+      <div className="flex justify-center items-center min-h-screen text-lg font-bold">
         Loading...
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "20px",
-      }}
-    >
-      <h1 style={{ textAlign: "center", marginBottom:"20px" }}><b>Impact Reports</b></h1>
+    <div className="min-h-screen flex flex-col items-center justify-center p-6">
+      <h1 className="text-2xl font-bold text-center mb-6">Impact Reports</h1>
 
-      {reports.map((report) => (
-        <div
-          key={report._id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "20px",
-            margin: "10px",
-            width: "100%",
-            maxWidth: "500px",
-            borderRadius: "8px",
-            textAlign: "center",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>{report.title}</h2>
-          <p>{report.description}</p>
-        </div>
-      ))}
+      <div className="w-full max-w-3xl grid gap-6">
+        {reports.map((report) => (
+          <div
+            key={report._id}
+            className="border border-gray-300 p-6 rounded-lg shadow hover:shadow-lg transition"
+          >
+            <h2 className="text-xl font-semibold mb-2">{report.title}</h2>
+            <p className="text-gray-600">{report.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default ImpactReports;
-
