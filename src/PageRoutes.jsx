@@ -29,6 +29,7 @@ import NotFound from "./component/NotFound";
 import Gallary from "./MyComponent/Gallary/Gallary"; // Importing the Gallery component
 import ImpactReport from "./MyComponent/ImpactReport/ImpactReport"; // Importing the ImpactReport component
 import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
+import OurReachWrapper from "./screens/ourReach/OurReachWrapper";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       { path: "/about", element: <AboutUs /> },
       { path: "/galary", element: <Gallary /> },
       { path: "/blogs", element: <BlogListingWrapper /> },
+      { path: "/our-reach", element: <OurReachWrapper /> },
       {path: "/impact-reports", element: <ImpactReport />}, // Added route for Gallery  
       { path: "/contact", element: <Contact /> },
       { path: "/discounted-stationery/cart", element: <CartListWrapper /> },

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AtmTextField from "../../component/atom/AtmTextField";
 import AtmButtonField from "../../component/atom/AtmButtonField";
 
-const OtpWithPhone = ({ formikProps, onSendOtp }) => {
+const OtpWithPhone = ({ formikProps, onSendOtp, otpSent }) => {
   const {
     values,
     handleBlur,
@@ -13,7 +13,6 @@ const OtpWithPhone = ({ formikProps, onSendOtp }) => {
     errors,
   } = formikProps;
 
-  const [otpSent, setOtpSent] = useState(false);
   const [timeLeft, setTimeLeft] = useState(120);
 
   useEffect(() => {
@@ -22,11 +21,9 @@ const OtpWithPhone = ({ formikProps, onSendOtp }) => {
 
   useEffect(() => {
     if (!otpSent || timeLeft <= 0) return;
-
     const timer = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
-
     return () => clearInterval(timer);
   }, [otpSent, timeLeft]);
 
@@ -36,7 +33,6 @@ const OtpWithPhone = ({ formikProps, onSendOtp }) => {
       const newOtp = [...values.otp];
       newOtp[index] = value;
       setFieldValue("otp", newOtp);
-
       if (value && index < 5) {
         document.getElementById(`otp-${index + 1}`)?.focus();
       }
@@ -73,7 +69,6 @@ const OtpWithPhone = ({ formikProps, onSendOtp }) => {
               type="button"
               label="Send OTP"
               onClick={() => {
-                setOtpSent(true);
                 setTimeLeft(120);
                 onSendOtp(values);
               }}

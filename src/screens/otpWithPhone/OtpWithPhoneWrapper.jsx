@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import OtpWithPhone from "./OtpWithPhone";
 import * as Yup from "yup";
@@ -14,58 +14,41 @@ const validationSchema = Yup.object().shape({
     .required("OTP is required"),
 });
 
-const handleOtpPaste = (e) => {
-  const paste = e.clipboardData.getData("text").trim();
-  if (/^\d{6}$/.test(paste)) {
-    const otpArr = paste.split("");
-    setFieldValue("otp", otpArr);
+const OtpWithPhoneWrapper = () => {
+  const [otpSent, setOtpSent] = useState(false);
+
+  // Send OTP handler
+ const handleSendOtp = async (values, setFieldError) => {
+  try {
+    const res = await axios.post(
+      "https://auth.phone.email/submit-login",
+      {
+        phone_no: values.phone,
+        phone_country: "+91",
+        client_id: import.meta.env.VITE_APP_PHONE_EMAIL_CLIENT_ID,
+      },
+      { withCredentials: true }
+    );
+
+    if (res.data.success) {
+      setOtpSent(true);
+    } else {
+      setFieldError("phone", res.data.message || "Failed to send OTP");
+    }
+  } catch (err) {
+    setFieldError(
+      "phone",
+      err?.response?.data?.message || "Error sending OTP"
+    );
   }
 };
 
-const OtpWithPhoneWrapper = () => {
-  //   const handleSendOtp = async (values, setFieldError, setOtpSent) => {
-  //     try {
-  //       const response = await axios.post("http://localhost:3300/send-mobile-otp", {
-  //         phone: values.phone,
-  //       }, { withCredentials: true });
 
-  //       if (response.data.success) {
-  //         setOtpSent(true);
-  //       } else {
-  //         setFieldError("phone", response.data.message || "Failed to send OTP");
-  //       }
-  //     } catch (err) {
-  //       setFieldError("phone", err?.response?.data?.message || "Error sending OTP");
-  //     }
-  //   };
-  const handleSendOtp = async (values, setFieldError, setOtpSent) => {
-    try {
-      const response = await axios.post(
-        "https://auth.phone.email/submit-login",
-        {
-          phone_no: values.phone,
-          phone_country: "+91",
-          client_id: process.env.VITE_APP_PHONE_EMAIL_CLIENT_ID,
-        },
-        { withCredentials: true }
-      );
-
-      if (response.data.success) {
-        setOtpSent(true);
-      } else {
-        setFieldError("phone", response.data.message || "Failed to send OTP");
-      }
-    } catch (err) {
-      setFieldError(
-        "phone",
-        err?.response?.data?.message || "Error sending OTP"
-      );
-    }
-  };
-
+  // Verify OTP handler
   const handleVerifyOtp = async (values, { setSubmitting, setErrors }) => {
     try {
       const fullOtp = values.otp.join("");
+
       const res = await axios.post(
         "http://localhost:3300/verify-mobile-otp",
         {
@@ -77,7 +60,7 @@ const OtpWithPhoneWrapper = () => {
       );
 
       if (res.data.success) {
-        alert("OTP verified successfully!");
+        alert("✅ OTP verified successfully!");
       } else {
         setErrors({ otp: "Invalid or expired OTP" });
       }
@@ -95,18 +78,14 @@ const OtpWithPhoneWrapper = () => {
       initialValues={{ phone: "", otp: Array(6).fill("") }}
       validationSchema={validationSchema}
       onSubmit={handleVerifyOtp}
-      onPaste={handleOtpPaste}
     >
       {(formikProps) => (
         <Form>
           <OtpWithPhone
             formikProps={formikProps}
+            otpSent={otpSent}
             onSendOtp={(values) =>
-              handleSendOtp(
-                values,
-                formikProps.setFieldError,
-                formikProps.setFieldValue.bind(null, "otpSent", true)
-              )
+              handleSendOtp(values, formikProps.setFieldError)
             }
           />
         </Form>
