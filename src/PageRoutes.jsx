@@ -28,6 +28,8 @@ import CheckoutWrapper from "./screens/checkout/CheckoutWrapper";
 import NotFound from "./component/NotFound";
 import Gallary from "./MyComponent/Gallary/Gallary"; // Importing the Gallery component
 import ImpactReport from "./MyComponent/ImpactReport/ImpactReport"; // Importing the ImpactReport component
+import OurReach from "./MyComponent/OurReach/OurReach";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -56,6 +58,7 @@ const router = createBrowserRouter([
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
+      {path: "/our-reach", element: <OurReach />}, // Added route for OurReach component  
     ],
   },
   { path: "/user", element: <UserNavigate /> },
