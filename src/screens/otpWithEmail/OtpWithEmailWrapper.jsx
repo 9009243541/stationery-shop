@@ -16,14 +16,14 @@ const OtpWithEmailWrapper = () => {
   };
 
   // Send OTP
-  const handleSendOtp = async (email) => {
+ const handleSendOtp = async (email) => {
     if (!email) {
       toast.error("Please enter your email before requesting OTP.");
       return;
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}otp/send`, {
+      const response = await fetch(`${API_BASE_URL}/otp/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -47,7 +47,7 @@ const OtpWithEmailWrapper = () => {
   const handleVerifyOtp = async (values) => {
     const otpValue = values.otp.join(""); // Join 6 digits
     try {
-      const response = await fetch(`${API_BASE_URL}otp/verify`, {
+      const response = await fetch(`${API_BASE_URL}/otp/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: values.email, otp: otpValue }),
