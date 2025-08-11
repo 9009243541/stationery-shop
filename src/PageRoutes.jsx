@@ -26,7 +26,9 @@ import Checkout from "./screens/checkout/Checkout";
 import ThankYou from "./screens/thank-you/ThankYou";
 import CheckoutWrapper from "./screens/checkout/CheckoutWrapper";
 import NotFound from "./component/NotFound";
-
+import Gallary from "./MyComponent/Gallary/Gallary"; // Importing the Gallery component
+import ImpactReport from "./MyComponent/ImpactReport/ImpactReport"; // Importing the ImpactReport component
+import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,6 +41,9 @@ const router = createBrowserRouter([
       },
 
       { path: "/about", element: <AboutUs /> },
+      { path: "/galary", element: <Gallary /> },
+      { path: "/blogs", element: <BlogListingWrapper /> },
+      {path: "/impact-reports", element: <ImpactReport />}, // Added route for Gallery  
       { path: "/contact", element: <Contact /> },
       { path: "/discounted-stationery/cart", element: <CartListWrapper /> },
       {
