@@ -121,10 +121,8 @@ const ProductListing = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {currentItems.map((item) => {
           const quantity = quantities[item.id] || 1;
-          const discountedPrice = item.price - (item.discount || 0);
-          const discountPercent = item.discount
-            ? Math.round((item.discount / item.price) * 100)
-            : 0;
+          const discountedPrice = (item.price * (1 - (item.discount || 0) / 100)).toFixed(2);
+          const discountPercent = item.discount || 0;
 
           return (
             <div
@@ -150,7 +148,7 @@ const ProductListing = ({
               </button>
 
               <img
-                src={item.image || "/default-image.png"}
+               src={item.image || "/default-image.png"}
                 alt={item.name}
                 className="w-full h-36 object-contain bg-gray-50 rounded-md"
               />
