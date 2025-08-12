@@ -20,7 +20,7 @@ const ProductListing = ({
   const [currentPage, setCurrentPage] = useState(1);
 
   const token = localStorage.getItem("token");
-  const BASE_URL = "https://tbtdj99v-3300.inc1.devtunnels.ms";
+  const BASE_URL = import.meta.env.VITE_APP_BASE_URL ;
 
   const handleQuantityChange = (id, delta) => {
     setQuantities((prev) => ({
@@ -50,11 +50,11 @@ const ProductListing = ({
 
       toast.success(
         isWished ? "Removed from wishlist" : "Added to wishlist",
-        { position: "top-right" }
+        { position: "bottom-right" }
       );
     } catch (error) {
       console.error("Wishlist API error:", error);
-      toast.error("Wishlist update failed", { position: "top-right" });
+      toast.error("Wishlist update failed", { position: "bottom-right" });
     }
   };
 
