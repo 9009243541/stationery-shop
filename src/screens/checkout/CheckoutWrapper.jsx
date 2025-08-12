@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Checkout from "./Checkout"; 
+import Checkout from "./Checkout";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -34,13 +34,13 @@ const CheckoutWrapper = () => {
         const products = res.data?.data?.products || [];
         setOrderSummary(products);
 
-        const total = products.reduce(
-          (acc, item) => {
-            const discountedPrice = item.product?.mrp * (1 - (item.product?.discount || 0) / 100);
-            return acc + discountedPrice * (item.quantity || 0);
-          },
-          0
-        );
+        const total = products.reduce((acc, item) => {
+          const discountedPrice =
+            item.product?.mrp *
+            (1 - (item.product?.discount || 0) / 100);
+          return acc + discountedPrice * (item.quantity || 0);
+        }, 0);
+
         setTotalAmount(total.toFixed(2));
       } catch (err) {
         console.error("Error fetching cart:", err);
@@ -62,6 +62,11 @@ const CheckoutWrapper = () => {
 
   // 🧾 Place Order
   const handlePlaceOrder = async () => {
+    if (!formData.latitude || !formData.longitude) {
+      toast.error("Please select your location on the map");
+      return;
+    }
+
     setLoading(true);
     try {
       const payload = {
@@ -95,6 +100,7 @@ const CheckoutWrapper = () => {
   return (
     <Checkout
       formData={formData}
+      setFormData={setFormData} // ✅ Added for map to work
       orderSummary={orderSummary}
       totalAmount={totalAmount}
       loading={loading}
