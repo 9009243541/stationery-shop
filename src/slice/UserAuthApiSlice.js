@@ -19,7 +19,7 @@ const UserAuthApiSlice = stationeryApiSlice.injectEndpoints({
     getUserProfile: builder.query({
       query: (userId) => ({
         url: `user/profile/${userId}`,
-        method: "GET",
+        method: "GET",                                                                                                                                                                                                                                                                                                                                
       }),
       providesTags: [{ type: "User", id: "LIST" }],
     }),
