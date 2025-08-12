@@ -3,17 +3,29 @@ import PageRoutes from "./PageRoutes";
 import { Provider } from "react-redux";
 import Store from "./Store";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for Toastify
 import AtmLoader from "./component/atom/AtmLoader";
-// import "react-toastify/dist/ReactToastify.css";
-// import AtmLoader from "./components/AtmLoader";
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const App = () => {
   return (
     <div>
       <Provider store={Store}>
         <PageRoutes />
-        <ToastContainer />
+
+        {/* Global Toast Settings */}
+        <ToastContainer
+          position="top-right" // Global toast position
+          autoClose={3000} // Auto close after 3s
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored" // "light", "dark", or "colored"
+        />
+
         {/* <AtmLoader/> */}
       </Provider>
     </div>
