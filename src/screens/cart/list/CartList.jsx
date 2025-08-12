@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
-const BASE_URL = 'https://tbtdj99v-3300.inc1.devtunnels.ms';
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
 
 const CartList = () => {
   const [cartItems, setCartItems] = useState([]);
