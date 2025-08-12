@@ -78,7 +78,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 no-underline">
           <img
-            src="./images/aa.png"
+            src="/images/aa.png"
             alt="AV Foundation Logo"
             className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-cover rounded"
             loading="lazy"
