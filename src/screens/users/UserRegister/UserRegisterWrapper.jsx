@@ -13,16 +13,28 @@ const UserRegisterWrapper = () => {
   const queryParams = new URLSearchParams(location.search);
   const emailFromQuery = queryParams.get("email");
   const prefilledEmail = location.state?.email || emailFromQuery || "";
+  // const initialValues = {
+  //   firstName: "",
+  //   lastName: "",
+  //   age: 0,
+  //   mobile: "",
+  //   email: prefilledEmail,
+  //   address: "",
+  //   password: "",
+  //   image: null,
+  // };
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    age: 0,
-    mobile: "",
-    email: prefilledEmail,
-    address: "",
-    password: "",
-    image: null,
-  };
+  firstName: "",
+  lastName: "",
+  age: 0,
+  mobile: "",
+  email: prefilledEmail,
+  address: "",
+  password: "",
+  confirmPassword: "", // new field
+  image: null,
+};
+
   const [register] = useRegisterUserMutation();
   const navigate = useNavigate();
   return (

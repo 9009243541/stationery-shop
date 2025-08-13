@@ -38,7 +38,7 @@ const UserRegister = ({ formikProps }) => {
       {/* Form wrapper with glassmorphism effect */}
       <div className="relative z-10 w-full max-w-2xl p-8 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-md">
         <h1 className="text-2xl font-bold text-center text-gray-700  mb-6">
-          User Registration
+          Registration Form
         </h1>
 
         {/* Keep your form fields here */}
@@ -162,6 +162,25 @@ const UserRegister = ({ formikProps }) => {
               <div className="text-red-500 text-sm">{errors.password}</div>
             )}
           </div>
+          {/* Confirm Password */}
+          <div>
+            <AtmPasswordField
+              label="Confirm Password"
+              type="password"
+              name="confirmPassword"
+              value={values.confirmPassword}
+              onChange={handleChange}
+              placeholder="Re-enter your password"
+              onBlur={handleBlur}
+              className="w-full"
+            />
+            {errors.confirmPassword && touched.confirmPassword && (
+              <div className="text-red-500 text-sm">
+                {errors.confirmPassword}
+              </div>
+            )}
+          </div>
+
           {/* image */}
           <div className="mt-1 flex items-center gap-4">
             {/* Custom File Upload Button */}
