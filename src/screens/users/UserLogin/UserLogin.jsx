@@ -8,26 +8,42 @@ const UserLogin = ({ formikProps }) => {
   const { values, handleChange, handleBlur, errors, touched, isSubmitting } =
     formikProps;
 
-  const buttonClasses = `w-full p-3 text-white rounded-md shadow-lg transition-all duration-300 cursor-pointer`;
-
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen px-4">
-      {/* Blurred Background Layer */}
-      <div
-        className="absolute inset-0 bg-cover bg-center filter blur-sm brightness-75"
-        style={{
-          backgroundImage: "url('/images/t.jpg')",
-          zIndex: -1,
-        }}
-      ></div>
+    <div className="relative flex flex-col items-center justify-center min-h-screen px-4 overflow-hidden">
+      {/* Background with gradient overlay */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/images/t.jpg"
+          alt="Background"
+          className="w-full h-full object-cover blur-sm"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70"></div>
+      </div>
 
-      {/* Content Layer */}
-      <div className="p-8 rounded-lg w-full max-w-2xl">
-        <h1 className="text-2xl font-bold text-center mb-6 text-white">
-          User Login
-        </h1>
+      {/* Form container */}
+      <div className="relative z-10 w-full max-w-2xl p-6 sm:p-10 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-xl">
+        {/* Logo + Heading */}
+        <div className="flex items-center mb-6 sm:mb-8 gap-4">
+          <img
+            src="/images/aa.png"
+            alt="Logo"
+            className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+          />
+          <div>
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-white drop-shadow-lg">
+              AV Foundation
+            </h1>
+            <p className="text-gray-200 text-xs sm:text-sm">
+              Welcome back! Please login to your account
+            </p>
+          </div>
+        </div>
 
-        <div className="space-y-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 drop-shadow-md">
+          Login to your account
+        </h2>
+
+        <div className="space-y-5 sm:space-y-6">
           {/* Email */}
           <div>
             <AtmTextField
@@ -38,11 +54,11 @@ const UserLogin = ({ formikProps }) => {
               onChange={handleChange}
               placeholder="Enter your email"
               onBlur={handleBlur}
-              className="w-full"
+              className="w-full p-3 rounded-lg bg-white/70 backdrop-blur-sm border border-white/30 placeholder-gray-400"
             />
-            {errors.email && touched.email && (
-              <div className="text-red-500 text-sm">{errors.email}</div>
-            )}
+            <div className="text-red-400 text-sm mt-1 min-h-[20px]">
+              {errors.email && touched.email && errors.email}
+            </div>
           </div>
 
           {/* Password */}
@@ -55,40 +71,49 @@ const UserLogin = ({ formikProps }) => {
               onChange={handleChange}
               placeholder="Enter your password"
               onBlur={handleBlur}
-              className="w-full"
+              className="w-full p-3 rounded-lg bg-white/70 backdrop-blur-sm border border-white/30 placeholder-gray-400"
             />
-            {errors.password && touched.password && (
-              <div className="text-red-500 text-sm">{errors.password}</div>
-            )}
+            <div className="text-red-400 text-sm mt-1 min-h-[20px]">
+              {errors.password && touched.password && errors.password}
+            </div>
           </div>
 
           {/* Submit Button */}
-          <div>
-            <AtmButtonField
-              type="submit"
-              disabled={isSubmitting}
-              label={isSubmitting ? "Logging in..." : "Login"}
-              className={`w-full p-3 text-white rounded-md shadow-lg transition-all duration-300 cursor-pointer ${
-                isSubmitting
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:scale-105"
-              }`}
-            />
-          </div>
-        </div>
+          <AtmButtonField
+            type="submit"
+            disabled={isSubmitting}
+            label={
+              isSubmitting ? (
+                <div className="flex items-center justify-center gap-2">
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  Logging in...
+                </div>
+              ) : (
+                "Login"
+              )
+            }
+            className={`w-full p-3 rounded-lg text-white font-bold shadow-lg transition transform ${
+              isSubmitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:scale-105"
+            }`}
+          />
 
-        <p className="text-center text-sm text-white mt-4">
-          Don't have an account?{" "}
-          <Link
-            to="/user"
-            className="text-sky-300 font-semibold hover:underline cursor-pointer"
-          >
-            Register
-          </Link>
-        </p>
+          {/* Register link */}
+          <p className="text-center text-xs sm:text-sm text-gray-200 mt-3 sm:mt-4">
+            Don’t have an account?{" "}
+            <Link
+              to="/user"
+              className="text-sky-400 font-semibold hover:underline cursor-pointer"
+            >
+              Register
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
 export default UserLogin;
+

@@ -5,7 +5,6 @@ import HomeListWrapper from "./screens/home/HomeListWrapper";
 import Layout from "./screens/layout/Layout";
 import ProductListingWrapper from "./screens/product/list/ProductListingWrapper";
 import AboutUs from "./screens/about/AboutUs";
-import Contact from "./screens/contact/Contact";
 import CartListWrapper from "./screens/cart/list/CartListWrapper";
 import CategoryListWrapper from "./screens/category/list/CategoryListWrapper";
 import UserLoginWrapper from "./screens/users/UserLogin/UserLoginWrapper";
@@ -30,6 +29,7 @@ import Gallary from "./MyComponent/Gallary/Gallary"; // Importing the Gallery co
 import ImpactReport from "./MyComponent/ImpactReport/ImpactReport"; // Importing the ImpactReport component
 import OurReachWrapper from "./screens/ourReach/OurReachWrapper";
 import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
+import ContactWrapper from "./screens/contact/ContactWrapper";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       { path: "/blogs", element: <BlogListingWrapper /> },
       { path: "/our-reach", element: <OurReachWrapper /> },
       { path: "/impact-reports", element: <ImpactReport /> },
-      { path: "/contact", element: <Contact /> },
+      { path: "/contact", element: <ContactWrapper /> },
       { path: "/discounted-stationery/cart", element: <CartListWrapper /> },
       {
         path: "/discounted-stationery/category",
