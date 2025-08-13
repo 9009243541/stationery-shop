@@ -171,7 +171,7 @@ const CartList = () => {
       </div>
 
       {/* Cart Total */}
-      <div className="mt-8 text-right bg-white p-4 rounded-lg border shadow-sm">
+      <div className="mt-8 text-right bg-white p-4 rounded-lg ">
         <p className="text-xl font-bold text-gray-800">
           Subtotal ({cartItems.length} items): ₹{calculateCartTotal()}
         </p>

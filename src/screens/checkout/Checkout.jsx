@@ -185,7 +185,26 @@
 //   );
 // };
 
-// export default Checkout;
+// export default Checkout;\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -273,7 +292,7 @@ const Checkout = ({
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
       <ToastContainer />
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800">Checkout</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800"></h2>
 
       {/* Order Summary */}
       <div>
