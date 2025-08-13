@@ -834,7 +834,7 @@ const ProductCard = ({
             ) : (
               <>
                 <FaShoppingCart size={16} />
-                Add to Cart
+                {/* Add to Cart */}
               </>
             )}
           </button>

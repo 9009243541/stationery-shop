@@ -21,7 +21,7 @@ const WorkSection = () => {
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Box 1 */}
-          <div className="border p-4 rounded shadow hover:shadow-md transition">
+          {/* <div className="border p-4 rounded shadow hover:shadow-md transition">
             <h3 className="font-semibold text-lg mb-2">📚 Free Copy Distribution</h3>
             <p className="text-sm mb-4">
               Once a year, we distribute free notebooks and school supplies to children from underprivileged communities.
@@ -32,10 +32,10 @@ const WorkSection = () => {
             >
               Learn More
             </button>
-          </div>
+          </div> */}
 
           {/* Box 2 */}
-          <div className="border p-4 rounded shadow hover:shadow-md transition">
+          {/* <div className="border p-4 rounded shadow hover:shadow-md transition">
             <h3 className="font-semibold text-lg mb-2">🛍️ Discounted Stationery</h3>
             <p className="text-sm mb-4">
               Need notebooks anytime? Get them at <strong>minimum cost</strong> from our website. All earnings directly support children in need.
@@ -46,7 +46,38 @@ const WorkSection = () => {
             >
               Shop Now
             </button>
-          </div>
+          </div> */}
+          <div
+  className="border p-4 rounded shadow hover:shadow-lg transition transform hover:scale-105 cursor-pointer"
+  onClick={() => navigate('/free-distribution')}
+>
+  <h3 className="font-semibold text-lg mb-2">📚 Free Copy Distribution</h3>
+  <p className="text-sm mb-4">
+    Once a year, we distribute free notebooks and school supplies to children from underprivileged communities.
+  </p>
+  <button
+    className="bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700 transition"
+  >
+    Learn More
+  </button>
+</div>
+
+{/* Box 2 */}
+<div
+  className="border p-4 rounded shadow hover:shadow-lg transition transform hover:scale-105 cursor-pointer"
+  onClick={() => navigate('/discounted-stationery')}
+>
+  <h3 className="font-semibold text-lg mb-2">🛍️ Discounted Stationery</h3>
+  <p className="text-sm mb-4">
+    Need notebooks anytime? Get them at <strong>minimum cost</strong> from our website. All earnings directly support children in need.
+  </p>
+  <button
+    className="bg-green-600 text-white text-sm px-4 py-2 rounded hover:bg-green-700 transition"
+  >
+    Shop Now
+  </button>
+</div>
+
         </div>
       </div>
     </section>
