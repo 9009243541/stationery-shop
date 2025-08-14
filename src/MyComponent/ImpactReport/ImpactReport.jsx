@@ -5,7 +5,7 @@ const ImpactReports = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://tbtdj99v-3300.inc1.devtunnels.ms/impact-reports/get-all")
+    fetch("https://stationery-shop-backend-y2lb.onrender.com/impact-reports/get-all")
       .then((res) => res.json())
       .then((data) => {
         setReports(data.data || []);

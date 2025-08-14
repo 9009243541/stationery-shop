@@ -1,7 +1,5 @@
 import React from "react";
-
 import { Formik, Form } from "formik";
-
 import { toast } from "react-toastify";
 import Contact from "./Contact";
 import { ContactValidationSchema } from "./ContactValidationSchema ";

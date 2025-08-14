@@ -5,7 +5,7 @@ const Gallery = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const BASE_URL = 'https://tbtdj99v-3300.inc1.devtunnels.ms';
+  const BASE_URL = 'https://stationery-shop-backend-y2lb.onrender.com';
   const IMAGE_URL = `${BASE_URL}/uploads/`;
 
   useEffect(() => {

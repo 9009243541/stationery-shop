@@ -20,7 +20,7 @@ const ProductListingWrapper = () => {
       reviews: product.review,
       image:
         product.image && product.image.trim() !== ""
-          ? `https://tbtdj99v-3300.inc1.devtunnels.ms/uploads/${product.image}`
+          ? `https://stationery-shop-backend-y2lb.onrender.com/uploads/${product.image}`
           : "https://via.placeholder.com/100x100.png?text=No+Image",
     })) || [];
 

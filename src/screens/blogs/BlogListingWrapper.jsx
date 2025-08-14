@@ -5,19 +5,6 @@ import { useGetAllBlogsQuery } from "../../slice/BlogApiSlice";
 const BlogListingWrapper = () => {
   const { data, isLoading, isError } = useGetAllBlogsQuery();
   console.log(data, "data");
-  // const blogs =
-  //   data?.data?.map((blog) => ({
-  //     id: blog._id,
-  //     title: blog.title,
-  //     author: blog.author,
-  //     category: blog.category || "General",
-  //     description: blog.description,
-  //     image:
-  //       blog.image && blog.image.trim() !== ""
-  //         ? `https://tbtdj99v-3300.inc1.devtunnels.ms/uploads/${blog.image}`
-  //         : "https://via.placeholder.com/100x100.png?text=No+Image",
-  //     date: blog.createdAt,
-  //   })) || [];
 const blogs =
   data?.data?.map((blog) => ({
     id: blog._id,
@@ -27,11 +14,11 @@ const blogs =
     description: blog.description,
     image:
       blog.image && blog.image.trim() !== ""
-        ? `https://tbtdj99v-3300.inc1.devtunnels.ms/uploads/${blog.image}`
+        ? `https://stationery-shop-backend-y2lb.onrender.com/uploads/${blog.image}`
         : null,
     video:
       blog.video && blog.video.trim() !== ""
-        ? `https://tbtdj99v-3300.inc1.devtunnels.ms/uploads/${blog.video}`
+        ? `https://stationery-shop-backend-y2lb.onrender.com/uploads/${blog.video}`
         : null,
     date: blog.createdAt,
   })) || [];

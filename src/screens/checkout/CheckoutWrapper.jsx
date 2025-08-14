@@ -4,7 +4,7 @@ import Checkout from "./Checkout";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "https://tbtdj99v-3300.inc1.devtunnels.ms";
+const BASE_URL = "https://stationery-shop-backend-y2lb.onrender.com";
 
 const CheckoutWrapper = () => {
   const navigate = useNavigate();
@@ -100,7 +100,7 @@ const CheckoutWrapper = () => {
   return (
     <Checkout
       formData={formData}
-      setFormData={setFormData} // ✅ Added for map to work
+      setFormData={setFormData} 
       orderSummary={orderSummary}
       totalAmount={totalAmount}
       loading={loading}

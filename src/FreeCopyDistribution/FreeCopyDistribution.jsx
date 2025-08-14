@@ -21,7 +21,7 @@ const FreeCopyDistribution = () => {
 
     try {
       const res = await axios.post(
-        "https://tbtdj99v-3300.inc1.devtunnels.ms/free-copy-distribution/register",
+        "https://stationery-shop-backend-y2lb.onrender.com/free-copy-distribution/register",
         formData
       );
 

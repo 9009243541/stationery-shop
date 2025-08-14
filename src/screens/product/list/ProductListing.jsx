@@ -1,6 +1,4 @@
 import React, { useState, useMemo, useCallback } from "react";
-import { Star, StarHalf, Plus, Minus, Heart } from "lucide-react";
-import { FaShoppingCart } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import debounce from "lodash/debounce";
@@ -9,6 +7,7 @@ import AtmSearchField from "../../../component/atom/AtmSearchField";
 import ProductDetailsDrawer from "../../../component/molecule/ProductDetailsDrawer";
 import axios from "axios";
 import ProductCard from "./ProductCard.jsx";
+
 const ProductListing = ({
   products = [],
   onDelete = () => {},
@@ -24,8 +23,7 @@ const ProductListing = ({
   const [isAddingToCart, setIsAddingToCart] = useState({});
   const [isTogglingWishlist, setIsTogglingWishlist] = useState({});
   const [sortOption, setSortOption] = useState("default");
-  const [selectedCategories, setSelectedCategories] = useState([]);
-console.log(selectedCategories,'selectedCategories')
+
   const token = localStorage.getItem("token");
   const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
@@ -54,9 +52,7 @@ console.log(selectedCategories,'selectedCategories')
       await axios.post(
         url,
         { productId },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setWishlist((prev) => ({
@@ -92,20 +88,9 @@ console.log(selectedCategories,'selectedCategories')
     }
   };
 
-  const categories = useMemo(
-    () => [...new Set(products.map((item) => item.category || "General"))],
-    [products]
-  );
-
   const filteredProducts = useMemo(() => {
     let filtered = products.filter((item) => {
-      const matchesSearch = item.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
-      const matchesCategory =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(item.category || "General");
-      return matchesSearch && matchesCategory;
+      return item.name.toLowerCase().includes(search.toLowerCase());
     });
 
     if (sortOption === "price-low-high") {
@@ -123,7 +108,7 @@ console.log(selectedCategories,'selectedCategories')
     }
 
     return filtered;
-  }, [products, search, sortOption, selectedCategories]);
+  }, [products, search, sortOption]);
 
   const itemsPerPage = 12;
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -134,15 +119,6 @@ console.log(selectedCategories,'selectedCategories')
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) setCurrentPage(newPage);
-  };
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((cat) => cat !== category)
-        : [...prev, category]
-    );
-    setCurrentPage(1);
   };
 
   if (isError) {
@@ -162,14 +138,6 @@ console.log(selectedCategories,'selectedCategories')
             <div className="h-10 w-40 bg-gray-200 rounded-lg animate-pulse"></div>
           </div>
         </div>
-        <div className="mb-6 flex flex-wrap gap-2">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-10 w-24 bg-gray-200 rounded-full animate-pulse"
-            ></div>
-          ))}
-        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {Array.from({ length: 12 }).map((_, i) => (
             <SkeletonCard key={i} />
@@ -179,13 +147,53 @@ console.log(selectedCategories,'selectedCategories')
     );
   }
 
-  if (!filteredProducts.length) {
-    return (
-      <p className="text-center text-lg text-gray-600 mt-10">
-        No products found
+if (!filteredProducts.length) {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
+      {/* Icon */}
+      <div className="bg-blue-100 rounded-full p-6 mb-6">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-16 w-16 text-blue-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21h4"
+          />
+        </svg>
+      </div>
+
+      {/* Title */}
+      <h2 className="text-2xl font-bold text-gray-800 mb-2">
+        No Products Found
+      </h2>
+
+      {/* Subtitle */}
+      <p className="text-gray-500 max-w-md mb-6">
+        We couldn’t find any products matching your search. Try adjusting your
+        filters or search term.
       </p>
-    );
-  }
+
+      {/* Action Button */}
+      <button
+        onClick={() => {
+          setSearch("");
+          setSortOption("default");
+          setCurrentPage(1);
+        }}
+        className="px-5 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+      >
+        Reset Filters
+      </button>
+    </div>
+  );
+}
+
 
   return (
     <div className="px-4 py-6 relative">
@@ -215,21 +223,7 @@ console.log(selectedCategories,'selectedCategories')
         </div>
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-2">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => handleCategoryChange(category)}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
-              selectedCategories.includes(category)
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+      {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {currentItems.map((item) => (
           <ProductCard
@@ -247,6 +241,7 @@ console.log(selectedCategories,'selectedCategories')
         ))}
       </div>
 
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-4 mt-8">
           <button

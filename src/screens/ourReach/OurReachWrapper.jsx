@@ -10,7 +10,7 @@ const OurReachWrapper = () => {
       ...item,
       icon:
         item.icon && item.icon.trim() !== ""
-          ? `https://tbtdj99v-3300.inc1.devtunnels.ms/uploads/${item.icon}`
+          ? `https://stationery-shop-backend-y2lb.onrender.com/uploads/${item.icon}`
           : "https://via.placeholder.com/100x100.png?text=No+Icon",
     })) || [];
 
