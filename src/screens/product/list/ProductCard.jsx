@@ -121,8 +121,7 @@ const ProductCard = ({
               <span className="animate-spin">⏳</span>
             ) : (
               <>
-                <FaShoppingCart size={16} />
-              
+                <FaShoppingCart size={16} /> 
               </>
             )}
           </button>
