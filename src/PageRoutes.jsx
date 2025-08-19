@@ -32,7 +32,7 @@ import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
 import ContactWrapper from "./screens/contact/ContactWrapper";
 import MissionAndVision from "./MyComponent/MissionAndVision";
 import WorkSection from "./MyComponent/WorkSection"; // Importing the WorkSection component
-
+import Donate from "./MyComponent/Donate/Donate"; // Importing the Donate component
 const router = createBrowserRouter([
   {
     path: "/",
@@ -62,6 +62,7 @@ const router = createBrowserRouter([
       { path: "/discounted-stationery/checkout", element: <Checkout /> },
       {path: "/vision", element: <MissionAndVision />},
       {path: "/work", element: <WorkSection />},
+      {path: "/donate", element: <Donate />},
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
