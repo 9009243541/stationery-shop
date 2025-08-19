@@ -40,20 +40,11 @@ const MobileSideNav = ({ isOpen, onClose }) => {
     ];
 
     if (isOnDiscountedStationery) {
-      baseItems.splice(
-        1,
-        0,
-        {
-          label: "Category",
-          to: "/discounted-stationery/category",
-          icon: IconCategory,
-        },
-        {
-          label: "Products",
-          to: "/discounted-stationery/product",
-          icon: IconShoppingCart,
-        }
-      );
+      baseItems.splice(1, 0, {
+        label: "Products",
+        to: "/discounted-stationery/product",
+        icon: IconShoppingCart,
+      });
     }
 
     return baseItems;

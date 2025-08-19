@@ -32,6 +32,8 @@ import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
 import ContactWrapper from "./screens/contact/ContactWrapper";
 import MissionAndVision from "./MyComponent/MissionAndVision";
 import WorkSection from "./MyComponent/WorkSection"; // Importing the WorkSection component
+import MyOrders from "./screens/myOrders/MyOrders";
+import Settings from "./screens/settings/Settings";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +77,8 @@ const router = createBrowserRouter([
   { path: "/register", element: <UserRegisterWrapper /> },
   { path: "/login", element: <UserLoginWrapper /> },
   { path: "/user-profile", element: <UserProfileWrapper /> },
+  { path: "/my-orders", element: <MyOrders /> },
+  { path: "/settings", element: <Settings /> },
   { path: "*", element: <NotFound /> },
    // Adding the Mission and Vision route
 ]);
