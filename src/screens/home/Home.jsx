@@ -6,6 +6,7 @@ import WorkSection from "../../MyComponent/WorkSection";
 import HowHelpSection from "../../MyComponent/HowHelpSection";
 import AboutSection from "../../MyComponent/AboutSection";
 import HowWeWork from "../../MyComponent/howWeWork";
+import MissionAndVision from "../../MyComponent/MissionAndVision";
 const Home = () => {
   return (
     <div className="bg-white min-h-screen">
@@ -47,6 +48,7 @@ const Home = () => {
       <HowHelpSection />
       <HowWeWork />
       <AboutSection />
+      <MissionAndVision />
 
       {/* Features Section */}
       {/* <section className="py-16 px-4 bg-gray-50">
