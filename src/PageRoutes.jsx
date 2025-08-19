@@ -30,6 +30,9 @@ import ImpactReport from "./MyComponent/ImpactReport/ImpactReport"; // Importing
 import OurReachWrapper from "./screens/ourReach/OurReachWrapper";
 import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
 import ContactWrapper from "./screens/contact/ContactWrapper";
+import MissionAndVision from "./MyComponent/MissionAndVision";
+import WorkSection from "./MyComponent/WorkSection"; // Importing the WorkSection component
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -57,6 +60,8 @@ const router = createBrowserRouter([
       { path: "/discounted-stationery/checkout", element: <CheckoutWrapper /> },
       { path: "/thank-you", element: <ThankYou /> },
       { path: "/discounted-stationery/checkout", element: <Checkout /> },
+      {path: "/vision", element: <MissionAndVision />},
+      {path: "/work", element: <WorkSection />},
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
@@ -71,6 +76,7 @@ const router = createBrowserRouter([
   { path: "/login", element: <UserLoginWrapper /> },
   { path: "/user-profile", element: <UserProfileWrapper /> },
   { path: "*", element: <NotFound /> },
+   // Adding the Mission and Vision route
 ]);
 const PageRoutes = () => {
   return <RouterProvider router={router} />;
