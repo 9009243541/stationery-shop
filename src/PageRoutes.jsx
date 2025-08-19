@@ -74,7 +74,6 @@ const router = createBrowserRouter([
   // { path: "/otp", element: <OtpWithPhoneWrapper /> },
   { path: "/register", element: <UserRegisterWrapper /> },
   { path: "/login", element: <UserLoginWrapper /> },
-  { path: "/user-profile", element: <UserProfileWrapper /> },
   { path: "*", element: <NotFound /> },
    // Adding the Mission and Vision route
 ]);
