@@ -62,8 +62,8 @@ const router = createBrowserRouter([
       { path: "/discounted-stationery/checkout", element: <CheckoutWrapper /> },
       { path: "/thank-you", element: <ThankYou /> },
       { path: "/discounted-stationery/checkout", element: <Checkout /> },
-      {path: "/vision", element: <MissionAndVision />},
-      {path: "/work", element: <WorkSection />},
+      { path: "/vision", element: <MissionAndVision /> },
+      { path: "/work", element: <WorkSection /> },
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
@@ -78,9 +78,8 @@ const router = createBrowserRouter([
   { path: "/login", element: <UserLoginWrapper /> },
   { path: "/user-profile", element: <UserProfileWrapper /> },
   { path: "/my-orders", element: <MyOrders /> },
-  { path: "/settings", element: <Settings /> },
   { path: "*", element: <NotFound /> },
-   // Adding the Mission and Vision route
+  // Adding the Mission and Vision route
 ]);
 const PageRoutes = () => {
   return <RouterProvider router={router} />;
