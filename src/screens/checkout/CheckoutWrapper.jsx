@@ -36,8 +36,7 @@ const CheckoutWrapper = () => {
 
         const total = products.reduce((acc, item) => {
           const discountedPrice =
-            item.product?.mrp *
-            (1 - (item.product?.discount || 0) / 100);
+            item.product?.mrp * (1 - (item.product?.discount || 0) / 100);
           return acc + discountedPrice * (item.quantity || 0);
         }, 0);
 
@@ -63,7 +62,12 @@ const CheckoutWrapper = () => {
   // 🧾 Place Order
   const handlePlaceOrder = async () => {
     if (!formData.latitude || !formData.longitude) {
-      toast.error("Please select your location on the map");
+      toast.error("Please select your location on the map or use current location");
+      return;
+    }
+
+    if (!formData.deliveryAddress) {
+      toast.error("Please provide a delivery address");
       return;
     }
 
@@ -74,8 +78,8 @@ const CheckoutWrapper = () => {
         phone: formData.phone,
         email: formData.email,
         location: {
-          latitude: formData.latitude,
-          longitude: formData.longitude,
+          latitude: formData.latitude, 
+          longitude: formData.longitude, 
         },
       };
 
@@ -100,7 +104,7 @@ const CheckoutWrapper = () => {
   return (
     <Checkout
       formData={formData}
-      setFormData={setFormData} 
+      setFormData={setFormData}
       orderSummary={orderSummary}
       totalAmount={totalAmount}
       loading={loading}

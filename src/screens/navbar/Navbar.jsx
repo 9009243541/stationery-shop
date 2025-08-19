@@ -64,12 +64,10 @@ const Navbar = () => {
 
   // Dynamically inject links if user is on discounted-stationery pages
   if (isOnDiscountedStationery) {
-    navLinks.splice(
-      1,
-      0,
-      { to: "/discounted-stationery/category", label: "Category" },
-      { to: "/discounted-stationery/product", label: "Products" }
-    );
+    navLinks.splice(1, 0, {
+      to: "/discounted-stationery/product",
+      label: "Products",
+    });
   }
 
   return (
