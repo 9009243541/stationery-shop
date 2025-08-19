@@ -32,6 +32,7 @@ import BlogListingWrapper from "./screens/blogs/BlogListingWrapper";
 import ContactWrapper from "./screens/contact/ContactWrapper";
 import MissionAndVision from "./MyComponent/MissionAndVision";
 import WorkSection from "./MyComponent/WorkSection"; // Importing the WorkSection component
+import Donate from "./MyComponent/Donate/Donate"; // Importing the Donate component
 import MyOrders from "./screens/myOrders/MyOrders";
 import Settings from "./screens/settings/Settings";
 
@@ -62,6 +63,9 @@ const router = createBrowserRouter([
       { path: "/discounted-stationery/checkout", element: <CheckoutWrapper /> },
       { path: "/thank-you", element: <ThankYou /> },
       { path: "/discounted-stationery/checkout", element: <Checkout /> },
+      {path: "/vision", element: <MissionAndVision />},
+      {path: "/work", element: <WorkSection />},
+      {path: "/donate", element: <Donate />},
       { path: "/vision", element: <MissionAndVision /> },
       { path: "/work", element: <WorkSection /> },
 
