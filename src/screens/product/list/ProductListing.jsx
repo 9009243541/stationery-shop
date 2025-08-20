@@ -7,6 +7,7 @@ import AtmSearchField from "../../../component/atom/AtmSearchField";
 import ProductDetailsDrawer from "../../../component/molecule/ProductDetailsDrawer";
 import axios from "axios";
 import ProductCard from "./ProductCard.jsx";
+import { useNavigate } from "react-router-dom";
 
 const ProductListing = ({
   products = [],
@@ -23,7 +24,7 @@ const ProductListing = ({
   const [isAddingToCart, setIsAddingToCart] = useState({});
   const [isTogglingWishlist, setIsTogglingWishlist] = useState({});
   const [sortOption, setSortOption] = useState("default");
-
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
@@ -82,7 +83,10 @@ const ProductListing = ({
       toast.success("🛒 Added to cart!", { position: "bottom-right" });
     } catch (error) {
       console.error("Add to cart error:", error);
-      toast.error("Failed to add to cart", { position: "bottom-right" });
+      navigate("/login");
+      toast.error("Failed to add to cart Please login first", {
+        position: "bottom-right",
+      });
     } finally {
       setIsAddingToCart((prev) => ({ ...prev, [productId]: false }));
     }
@@ -147,53 +151,52 @@ const ProductListing = ({
     );
   }
 
-if (!filteredProducts.length) {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
-      {/* Icon */}
-      <div className="bg-blue-100 rounded-full p-6 mb-6">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-16 w-16 text-blue-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
+  if (!filteredProducts.length) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
+        {/* Icon */}
+        <div className="bg-blue-100 rounded-full p-6 mb-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-16 w-16 text-blue-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21h4"
+            />
+          </svg>
+        </div>
+
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          No Products Found
+        </h2>
+
+        {/* Subtitle */}
+        <p className="text-gray-500 max-w-md mb-6">
+          We couldn’t find any products matching your search. Try adjusting your
+          filters or search term.
+        </p>
+
+        {/* Action Button */}
+        <button
+          onClick={() => {
+            setSearch("");
+            setSortOption("default");
+            setCurrentPage(1);
+          }}
+          className="px-5 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21h4"
-          />
-        </svg>
+          Reset Filters
+        </button>
       </div>
-
-      {/* Title */}
-      <h2 className="text-2xl font-bold text-gray-800 mb-2">
-        No Products Found
-      </h2>
-
-      {/* Subtitle */}
-      <p className="text-gray-500 max-w-md mb-6">
-        We couldn’t find any products matching your search. Try adjusting your
-        filters or search term.
-      </p>
-
-      {/* Action Button */}
-      <button
-        onClick={() => {
-          setSearch("");
-          setSortOption("default");
-          setCurrentPage(1);
-        }}
-        className="px-5 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
-      >
-        Reset Filters
-      </button>
-    </div>
-  );
-}
-
+    );
+  }
 
   return (
     <div className="px-4 py-6 relative">
