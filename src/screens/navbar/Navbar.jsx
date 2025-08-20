@@ -121,7 +121,7 @@ const Navbar = () => {
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/about", label: "About Us" },
-    { to: "/galary", label: "Galary" },
+    { to: "/gallery", label: "Gallery" },
     { to: "/our-reach", label: "Our Reach" },
     { to: "/impact-reports", label: "Impact Reports" },
     { to: "/blogs", label: "Blogs" },

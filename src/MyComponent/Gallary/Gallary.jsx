@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const BASE_URL = 'https://stationery-shop-backend-y2lb.onrender.com';
+  const BASE_URL = "https://stationery-shop-backend-y2lb.onrender.com";
   const IMAGE_URL = `${BASE_URL}/uploads/`;
 
   useEffect(() => {
@@ -15,10 +15,10 @@ const Gallery = () => {
         if (res.data.status) {
           setImages(res.data.data);
         } else {
-          console.error('Unexpected response:', res.data);
+          console.error("Unexpected response:", res.data);
         }
       } catch (error) {
-        console.error('Error fetching gallery:', error);
+        console.error("Error fetching gallery:", error);
       } finally {
         setLoading(false);
       }
@@ -48,7 +48,7 @@ const Gallery = () => {
             >
               <img
                 src={`${IMAGE_URL}${item.image}`}
-                alt={item.description || 'Gallery image'}
+                alt={item.description || "Gallery image"}
                 className="w-full h-56 object-cover"
               />
               {/* Overlay on hover */}
