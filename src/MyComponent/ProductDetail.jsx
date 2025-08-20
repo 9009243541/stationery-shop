@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const ProductDetail = () => {
   const { productId } = useParams();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   // Fetch product details
   const fetchProduct = async () => {
     try {
-      const res = await axios.get(`https://your-api-url.com/product/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `https://your-api-url.com/product/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setProduct(res.data.product);
     } catch (error) {
-      console.error('Error fetching product:', error);
+      console.error("Error fetching product:", error);
     } finally {
       setLoading(false);
     }
@@ -39,10 +42,11 @@ const ProductDetail = () => {
           },
         }
       );
-      alert('Product added to cart!');
+      alert("Product added to cart!");
     } catch (error) {
-      console.error('Error adding to cart:', error);
-      alert('Failed to add to cart.');
+      console.error("Error adding to cart:", error);
+      navigate("/login");
+      alert("Failed to add to cart please login first.");
     }
   };
 
@@ -57,7 +61,7 @@ const ProductDetail = () => {
             src={product.image}
             alt={product.name}
             className="img-fluid rounded shadow"
-            style={{ maxHeight: '500px', objectFit: 'cover' }}
+            style={{ maxHeight: "500px", objectFit: "cover" }}
           />
         </div>
         <div className="col-md-6">
