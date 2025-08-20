@@ -15,6 +15,7 @@ import {
   IconCamera,
   IconUsersGroup,
   IconUserCog,
+  IconShoppingBag
 } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 
@@ -32,11 +33,12 @@ const MobileSideNav = ({ isOpen, onClose }) => {
     const baseItems = [
       { label: "Home", to: "/", icon: IconHome },
       { label: "About Us", to: "/about", icon: IconInfoCircle },
-      { label: "Galary", to: "/galary", icon: IconCamera },
+      { label: "Gallery", to: "/gallery", icon: IconCamera },
       { label: "Our Reach", to: "/our-reach", icon: IconUsersGroup },
       { label: "Impact Reports", to: "/impact-reports", icon: IconBook },
       { label: "Blogs", to: "/blogs", icon: IconBook },
       { label: "Contact Us", to: "/contact", icon: IconPhone },
+      { label: "My Orders", to: "/my-orders", icon: IconShoppingBag },
     ];
 
     if (isOnDiscountedStationery) {

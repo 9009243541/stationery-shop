@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FileText, Image as ImageIcon, Download } from "lucide-react";
+import AtmSkeleton from "../../component/atom/AtmSkeleton";
 
 const ImpactReports = () => {
   const [reports, setReports] = useState([]);
@@ -15,14 +16,50 @@ const ImpactReports = () => {
       .catch(() => setLoading(false));
   }, []);
 
-  if (loading) {
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center min-h-screen text-lg font-bold">
+  //       Loading...
+  //     </div>
+  //   );
+  // }
+if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen text-lg font-bold">
-        Loading...
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center p-8">
+        <h1 className="text-3xl font-bold text-center mb-10 text-blue-700">
+          📊 Impact Reports
+        </h1>
+
+        <div className="w-full max-w-5xl grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, idx) => (
+            <div
+              key={idx}
+              className="bg-white border border-gray-200 p-5 rounded-2xl shadow flex flex-col justify-between"
+            >
+              {/* Title Skeleton */}
+              <AtmSkeleton width="70%" height="20px" className="mb-3" />
+
+              {/* Description Skeleton */}
+              <AtmSkeleton width="100%" height="14px" className="mb-2" />
+              <AtmSkeleton width="90%" height="14px" className="mb-2" />
+              <AtmSkeleton width="80%" height="14px" className="mb-4" />
+
+              {/* Document Preview Skeleton */}
+              <div className="mb-4 flex justify-center items-center h-40 border rounded-lg bg-gray-50 overflow-hidden">
+                <AtmSkeleton variant="rect" width="100%" height="100%" />
+              </div>
+
+              {/* Footer Skeleton */}
+              <div className="flex justify-between items-center mt-auto">
+                <AtmSkeleton width="30%" height="12px" />
+                <AtmSkeleton width="60px" height="28px" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center p-8">
       <h1 className="text-3xl font-bold text-center mb-10 text-blue-700">
