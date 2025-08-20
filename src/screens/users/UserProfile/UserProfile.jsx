@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Edit3 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IconLogout } from "@tabler/icons-react";
 import { motion } from "framer-motion";
+import useLogout from "../../../component/atom/useLogout";
 
 const Avatar = ({ imageUrl, userId }) => {
   return (
@@ -13,7 +14,10 @@ const Avatar = ({ imageUrl, userId }) => {
         className="w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white text-base transition-opacity rounded-full">
-        <Link to={`/update-user/${userId}`} className="flex flex-col items-center space-y-1">
+        <Link
+          to={`/update-user/${userId}`}
+          className="flex flex-col items-center space-y-1"
+        >
           <Edit3 className="w-7 h-7" />
           <span className="font-semibold">Update</span>
         </Link>
@@ -23,15 +27,13 @@ const Avatar = ({ imageUrl, userId }) => {
 };
 
 const UserProfile = ({ imageUrl, name, mobile, email, address, age, userId }) => {
-  const navigate = useNavigate();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const logout = useLogout(); // ✅ reusable hook
 
   const handleLogout = () => {
     setIsLoggingOut(true);
     setTimeout(() => {
-      localStorage.removeItem("token");
-      navigate("/");
-      window.location.reload();
+      logout(); // ✅ centralized logout logic
     }, 1500);
   };
 
@@ -112,6 +114,7 @@ const UserProfile = ({ imageUrl, name, mobile, email, address, age, userId }) =>
 
           <hr className="border-gray-400" />
 
+          {/* Logout Button */}
           <motion.button
             onClick={handleLogout}
             whileTap={{ scale: 0.97 }}
