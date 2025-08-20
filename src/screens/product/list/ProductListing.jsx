@@ -83,10 +83,10 @@ const ProductListing = ({
       toast.success("🛒 Added to cart!", { position: "bottom-right" });
     } catch (error) {
       console.error("Add to cart error:", error);
-      navigate("/login");
       toast.error("Failed to add to cart Please login first", {
         position: "bottom-right",
       });
+      navigate("/login");
     } finally {
       setIsAddingToCart((prev) => ({ ...prev, [productId]: false }));
     }
