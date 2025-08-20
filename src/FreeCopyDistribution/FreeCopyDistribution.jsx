@@ -14,26 +14,30 @@ const FreeCopyDistribution = () => {
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      const token = localStorage.getItem("token");
+
       const res = await axios.post(
         "https://stationery-shop-backend-y2lb.onrender.com/free-copy-distribution/register",
-        formData
+        formData,
+        {
+          headers: {
+            "x-access-token": token,
+          },
+        }
       );
 
       setSubmitted(true);
 
-      // Check if message exists in backend response
       const message = res?.data?.message || "✅ Registration successful!";
       toast.success(message);
 
       setFormData({ name: "", contact: "", email: "" });
     } catch (err) {
-      // Try to get error message from backend response
       const errorMessage =
         err?.response?.data?.message ||
         "❌ Failed to register. Please try again.";
