@@ -76,11 +76,14 @@ const ProductCard = ({
               </span>
             )}
           </div>
-          <div className="flex items-center mt-1 text-yellow-400">
+          {/* <div className="flex items-center mt-1 text-yellow-400">
             {Array.from({ length: 4 }).map((_, i) => (
               <Star key={i} size={14} fill="currentColor" stroke="none" />
             ))}
             <StarHalf size={14} fill="currentColor" stroke="none" />
+          </div> */}
+          <div className="flex items-center mt-1"> 
+            <span className="text-yellow-500">{item.discount} %  </span> <p> proposed by {item.organizedBy}</p>
           </div>
         </div>
 
