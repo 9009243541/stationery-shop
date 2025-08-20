@@ -126,6 +126,7 @@ const Navbar = () => {
     { to: "/case-study", label: "Case Study" },
     { to: "/blogs", label: "Blogs" },
     { to: "/contact", label: "Contact Us" },
+    { to: "/discounted-stationery", label: "shop now " },
   ];
 
   // Inject discounted-stationery link dynamically
