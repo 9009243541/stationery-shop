@@ -122,8 +122,8 @@ const Navbar = () => {
     { to: "/", label: "Home" },
     { to: "/about", label: "About Us" },
     { to: "/gallery", label: "Gallery" },
-    { to: "/our-reach", label: "Our Reach" },
-    { to: "/impact-reports", label: "Impact Reports" },
+    // { to: "/our-reach", label: "Our Reach" },
+    { to: "/case-study", label: "Case Study" },
     { to: "/blogs", label: "Blogs" },
     { to: "/contact", label: "Contact Us" },
   ];

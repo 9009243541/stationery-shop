@@ -50,7 +50,7 @@ const router = createBrowserRouter([
       { path: "/gallery", element: <Gallary /> },
       { path: "/blogs", element: <BlogListingWrapper /> },
       { path: "/our-reach", element: <OurReachWrapper /> },
-      { path: "/impact-reports", element: <ImpactReport /> },
+      { path: "/case-study", element: <ImpactReport /> },
       { path: "/contact", element: <ContactWrapper /> },
       { path: "/discounted-stationery/cart", element: <CartListWrapper /> },
       {
