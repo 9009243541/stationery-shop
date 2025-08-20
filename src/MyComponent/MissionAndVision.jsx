@@ -3,7 +3,7 @@ import React from "react";
 
 const MissionAndVision = () => {
   return (
-    <section className="bg-gray-50 py-16 px-6 lg:px-20">
+    <section className="bg-yellow-50 py-16 px-6 lg:px-20 ">
       <div className="max-w-6xl mx-auto text-center">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-12">
