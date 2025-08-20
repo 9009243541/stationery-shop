@@ -14,10 +14,12 @@ const CartList = () => {
 
   const fetchCartItems = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(`${BASE_URL}/cart/get`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      // const token = localStorage.getItem("token");
+      const response = await axios.get(`${BASE_URL}/cart/get`, 
+      //   {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // }
+    );
       setCartItems(response.data?.data?.products || []);
     } catch (error) {
       toast.error("❌ Failed to fetch cart items");
@@ -28,11 +30,11 @@ const CartList = () => {
 
   const removeFromCart = async (productId) => {
     try {
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
       await axios.post(
         `${BASE_URL}/cart/remove`,
         { productId },
-        { headers: { Authorization: `Bearer ${token}` } }
+        // { headers: { Authorization: `Bearer ${token}` } }
       );
       setCartItems((prev) =>
         prev.filter((item) => item.product._id !== productId)
