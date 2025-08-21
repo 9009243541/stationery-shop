@@ -83,7 +83,7 @@ const ProductCard = ({
             <StarHalf size={14} fill="currentColor" stroke="none" />
           </div> */}
           <div className="flex items-center mt-1"> 
-            <span className="text-yellow-500">{item.discount} %  </span> <p> proposed by {item.organizedBy}</p>
+            <span className="text-yellow-500">{item.discount} % proposed by {item.organizedBy} </span>
           </div>
         </div>
 
