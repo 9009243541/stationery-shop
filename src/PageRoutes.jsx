@@ -50,7 +50,7 @@ const router = createBrowserRouter([
       { path: "/gallery", element: <Gallary /> },
       { path: "/blogs", element: <BlogListingWrapper /> },
       { path: "/our-reach", element: <OurReachWrapper /> },
-      { path: "/case-study", element: <ImpactReport /> },
+      { path: "/impact-reports", element: <ImpactReport /> },
       { path: "/contact", element: <ContactWrapper /> },
       { path: "/discounted-stationery/cart", element: <CartListWrapper /> },
       {
@@ -79,7 +79,6 @@ const router = createBrowserRouter([
   { path: "/user-profile", element: <UserProfileWrapper /> },
   { path: "/my-orders", element: <MyOrders /> },
   { path: "*", element: <NotFound /> },
-  // Adding the Mission and Vision route
 ]);
 const PageRoutes = () => {
   return <RouterProvider router={router} />;

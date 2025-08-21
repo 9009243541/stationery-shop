@@ -91,7 +91,9 @@ const Checkout = ({
     setIsGeocoding(true);
     try {
       const response = await fetch(
-        `https://us1.locationiq.com/v1/reverse.php?key=${import.meta.env.VITE_APP_LOCATIONIQ_API_KEY}&lat=${latitude}&lon=${longitude}&format=json`
+        `https://us1.locationiq.com/v1/reverse.php?key=${
+          import.meta.env.VITE_APP_LOCATIONIQ_API_KEY
+        }&lat=${latitude}&lon=${longitude}&format=json`
       );
       const data = await response.json();
       if (data && data.display_name) {
@@ -108,8 +110,7 @@ const Checkout = ({
       setIsGeocoding(false);
     }
   };
-// 🔹 Reverse geocoding using LocationIQ (normal version for current location)
-
+  // 🔹 Reverse geocoding using LocationIQ (normal version for current location)
 
   // 🔹 Handle map location selection
   const handleLocationSelect = async (loc) => {
@@ -207,7 +208,10 @@ const Checkout = ({
                     {item.product?.discount}% | Price after Discount: ₹
                     {discountedPrice}
                   </p>
-                  <p className="text-sm font-semibold text-gray-800">
+                  <p className="text-black-500 text-xs font-bold bg-yellow-100 px-2 py-1 rounded w-fit">
+                    {item.product.discount}% proposed by {item.product.organizedBy}
+                  </p>
+                  <p className="text-sm font-bold  text-green-600 w-fit px-3 py-1 rounded">
                     Item Total: ₹{totalItemPrice}
                   </p>
                 </li>

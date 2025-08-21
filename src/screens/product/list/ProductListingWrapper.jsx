@@ -19,6 +19,9 @@ const ProductListingWrapper = () => {
       rating: product.rating,
       reviews: product.review,
       organizedBy: product.organizedBy,
+
+
+      
       image:
         product.image && product.image.trim() !== ""
           ? `https://stationery-shop-backend-y2lb.onrender.com/uploads/${product.image}`

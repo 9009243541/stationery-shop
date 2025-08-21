@@ -148,8 +148,8 @@ const CartList = () => {
               {/* Price & Remove */}
               <div className="flex flex-col justify-between text-right mt-4 md:mt-0 md:ml-6">
                 <div>
-                  <span className="text-red-500 text-xs font-bold bg-red-100 px-2 py-1 rounded">
-                    Limited time deal
+                  <span className="text-black-500 text-xs font-bold bg-yellow-100 px-2 py-1 rounded">
+                      {item.product?.discount > 0 ? ` ${item.product.discount}% off proposed by ` : ""}{item.product?.organizedBy || "Unknown"}
                   </span>
                   <p className="text-lg font-bold text-gray-800 mt-1">
                     ₹{totalItemPrice}
@@ -159,8 +159,9 @@ const CartList = () => {
                   </p>
                 </div>
                 <button
-                  className="flex items-center gap-1 text-red-500 hover:text-red-600 mt-2"
+                  className="flex items-center gap-1 text-red-500 hover:text-red-600 mt-2 mr-2"
                   onClick={() => removeFromCart(item.product._id)}
+                  style={{ alignSelf: "flex-end" }}
                 >
                   <Trash2 size={16} /> Remove
                 </button>
