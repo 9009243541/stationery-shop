@@ -34,6 +34,7 @@ import MissionAndVision from "./MyComponent/MissionAndVision";
 import WorkSection from "./MyComponent/WorkSection"; // Importing the WorkSection component
 import MyOrders from "./screens/myOrders/MyOrders";
 import Settings from "./screens/settings/Settings";
+import Donate from "./MyComponent/Donate/Donate"; // Importing the Donate component
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
       { path: "/discounted-stationery/checkout", element: <Checkout /> },
       { path: "/vision", element: <MissionAndVision /> },
       { path: "/work", element: <WorkSection /> },
+      { path: "/donate", element: <Donate /> },
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
