@@ -44,9 +44,9 @@ const Wishlist = () => {
         toast.error("Failed to add product to cart");
       }
     } catch (error) {
-      console.error("Error adding to cart:", error);
+      console.error("failed to add cart:", error);
       toast.error("Something went wrong. Try again later.");
-    }
+    } 
   };
 
   const handlePageChange = (page) => {
