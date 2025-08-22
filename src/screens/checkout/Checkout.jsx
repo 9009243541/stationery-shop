@@ -7,6 +7,7 @@ import L from "leaflet";
 import { jwtDecode } from "jwt-decode";
 import { useGetUserProfileQuery } from "../../slice/UserAuthApiSlice";
 
+
 // Marker icon fix
 const markerIcon = new L.Icon({
   iconUrl:
@@ -26,7 +27,7 @@ const LocationMarker = ({ setLocation, position }) => {
     }
   }, [position, map]);
 
-  // ✅ Attach click handler only once
+  // Attach click handler only once
   useEffect(() => {
     const handleClick = (e) => {
       setLocation({
@@ -37,7 +38,7 @@ const LocationMarker = ({ setLocation, position }) => {
 
     map.on("click", handleClick);
 
-    // ✅ Cleanup listener when component unmounts or map changes
+    // Cleanup listener when component unmounts or map changes
     return () => {
       map.off("click", handleClick);
     };
@@ -58,7 +59,7 @@ const Checkout = ({
   const [isGeocoding, setIsGeocoding] = useState(false);
   const [position, setPosition] = useState(null);
 
-  // 🔹 Decode token to get userId
+  // Decode token to get userId
   const token = localStorage.getItem("token");
   let userId = null;
   if (token) {
@@ -70,10 +71,10 @@ const Checkout = ({
     }
   }
 
-  // 🔹 Fetch user profile
+  // Fetch user profile
   const { data, isSuccess } = useGetUserProfileQuery(userId, { skip: !userId });
 
-  // 🔹 Prefill form when user data is fetched
+  // Prefill form when user data is fetched
   useEffect(() => {
     if (isSuccess && data?.data) {
       const { address, email, mobile } = data.data;
@@ -82,11 +83,12 @@ const Checkout = ({
         deliveryAddress: address || "",
         email: email || "",
         phone: mobile || "",
+        paymentMode: prev.paymentMode || "", // Preserve paymentMode
       }));
     }
   }, [isSuccess, data, setFormData]);
 
-  // 🔹 Reverse geocoding using LocationIQ
+  // Reverse geocoding using LocationIQ
   const fetchAddress = async (latitude, longitude) => {
     setIsGeocoding(true);
     try {
@@ -110,9 +112,8 @@ const Checkout = ({
       setIsGeocoding(false);
     }
   };
-  // 🔹 Reverse geocoding using LocationIQ (normal version for current location)
 
-  // 🔹 Handle map location selection
+  // Handle map location selection
   const handleLocationSelect = async (loc) => {
     setPosition({
       lat: parseFloat(loc.latitude),
@@ -127,7 +128,7 @@ const Checkout = ({
     }));
   };
 
-  // 🔹 Fetch current location
+  // Fetch current location
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       setIsGeocoding(true);
@@ -157,7 +158,7 @@ const Checkout = ({
     }
   };
 
-  // 🔹 Initialize map with user location
+  // Initialize map with user location
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -193,9 +194,7 @@ const Checkout = ({
                 item.product.mrp,
                 item.product.discount
               ).toFixed(2);
-              const totalItemPrice = (discountedPrice * item.quantity).toFixed(
-                2
-              );
+              const totalItemPrice = (discountedPrice * item.quantity).toFixed(2);
 
               return (
                 <li key={index} className="border-b pb-2">
@@ -211,7 +210,7 @@ const Checkout = ({
                   <p className="text-black-500 text-xs font-bold bg-yellow-100 px-2 py-1 rounded w-fit">
                     {item.product.discount}% proposed by {item.product.organizedBy}
                   </p>
-                  <p className="text-sm font-bold  text-green-600 w-fit px-3 py-1 rounded">
+                  <p className="text-sm font-bold text-green-600 w-fit px-3 py-1 rounded">
                     Item Total: ₹{totalItemPrice}
                   </p>
                 </li>
@@ -264,6 +263,26 @@ const Checkout = ({
           required
           className="w-full mb-3 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+
+        {/* Payment Mode Selection */}
+        <div className="mb-3">
+          <label className="block text-gray-700 font-medium mb-1">
+            Payment Mode
+          </label>
+          <select
+            name="paymentMode"
+            value={formData.paymentMode}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select Payment Mode</option>
+            <option value="cash">Cash on Delivery</option>
+            <option value="upi">UPI</option>
+            <option value="card">Card</option>
+            <option value="netbanking">Net Banking</option>
+          </select>
+        </div>
 
         {/* Current Location Button */}
         <button
