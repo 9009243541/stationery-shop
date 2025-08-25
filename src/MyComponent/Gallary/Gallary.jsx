@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AtmSkeleton from "../../component/atom/AtmSkeleton";
-
 const Gallery = () => {
-  const [media, setMedia] = useState([]); // all media (images + videos)
+  const [media, setMedia] = useState([]); 
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("images"); // default: show images
+  const [activeTab, setActiveTab] = useState("images");
 
-  const BASE_URL = "https://stationery-shop-backend-y2lb.onrender.com";
+  const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3300";
   const MEDIA_URL = `${BASE_URL}/uploads/`;
 
   useEffect(() => {
     const fetchGallery = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/gallery/get-all`);
+        console.log(res.data.data, "📌 API Response");
+
         if (res.data.status) {
-          setMedia(res.data.data);
+          const items = res.data?.data || []; // ✅ direct array
+          setMedia(items);
         } else {
           console.error("Unexpected response:", res.data);
         }
@@ -27,14 +29,18 @@ const Gallery = () => {
     };
 
     fetchGallery();
-  }, []);
+  }, [BASE_URL]);
 
-  // separate images and videos
-  const images = media.filter((item) =>
-    item.image?.match(/\.(jpg|jpeg|png|gif|webp)$/i)
+  // ✅ Separate images and videos safely
+  const images = (media || []).filter(
+    (item) => item.image && item.image.match(/\.(jpg|jpeg|png|gif|webp)$/i)
   );
-  const videos = media.filter((item) =>
-    item.image?.match(/\.(mp4|webm|ogg|mov)$/i)
+
+  const videos = (media || []).filter(
+    (item) =>
+      (item.video || item.vedio) &&
+      ((item.video && item.video.match(/\.(mp4|webm|ogg|mov)$/i)) ||
+        (item.vedio && item.vedio.match(/\.(mp4|webm|ogg|mov)$/i)))
   );
 
   return (
@@ -69,6 +75,7 @@ const Gallery = () => {
 
       {/* Content */}
       {loading ? (
+        // Skeleton Loader
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {[...Array(8)].map((_, idx) => (
             <div
@@ -80,6 +87,7 @@ const Gallery = () => {
           ))}
         </div>
       ) : activeTab === "images" ? (
+        // Images Section
         images.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">No images found.</p>
         ) : (
@@ -105,7 +113,8 @@ const Gallery = () => {
             ))}
           </div>
         )
-      ) : videos.length === 0 ? (
+      ) : // Videos Section
+      videos.length === 0 ? (
         <p className="text-center text-gray-500 text-lg">No videos found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -117,7 +126,7 @@ const Gallery = () => {
               <video
                 controls
                 className="w-full h-56 object-cover"
-                src={`${MEDIA_URL}${item.image}`}
+                src={`${MEDIA_URL}${item.video || item.vedio}`}
               />
               {item.description && (
                 <div className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center px-4">
