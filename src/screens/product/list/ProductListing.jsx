@@ -20,7 +20,6 @@ const ProductListing = ({
   const [quantities, setQuantities] = useState({});
   const [wishlist, setWishlist] = useState({});
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState({});
   const [isTogglingWishlist, setIsTogglingWishlist] = useState({});
   const [sortOption, setSortOption] = useState("default");
@@ -31,7 +30,6 @@ const ProductListing = ({
   const debouncedSetSearch = useCallback(
     debounce((value) => {
       setSearch(value);
-      setCurrentPage(1);
     }, 300),
     []
   );
@@ -95,9 +93,9 @@ const ProductListing = ({
   };
 
   const filteredProducts = useMemo(() => {
-    let filtered = products.filter((item) => {
-      return item.name.toLowerCase().includes(search.toLowerCase());
-    });
+    let filtered = products.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
 
     if (sortOption === "price-low-high") {
       filtered.sort(
@@ -115,17 +113,6 @@ const ProductListing = ({
 
     return filtered;
   }, [products, search, sortOption]);
-
-  const itemsPerPage = 12;
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const currentItems = filteredProducts.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) setCurrentPage(newPage);
-  };
 
   if (isError) {
     return (
@@ -156,7 +143,6 @@ const ProductListing = ({
   if (!filteredProducts.length) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
-        {/* Icon */}
         <div className="bg-blue-100 rounded-full p-6 mb-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -174,23 +160,18 @@ const ProductListing = ({
           </svg>
         </div>
 
-        {/* Title */}
         <h2 className="text-2xl font-bold text-gray-800 mb-2">
           No Products Found
         </h2>
-
-        {/* Subtitle */}
         <p className="text-gray-500 max-w-md mb-6">
           We couldn’t find any products matching your search. Try adjusting your
           filters or search term.
         </p>
 
-        {/* Action Button */}
         <button
           onClick={() => {
             setSearch("");
             setSortOption("default");
-            setCurrentPage(1);
           }}
           className="px-5 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
         >
@@ -215,10 +196,7 @@ const ProductListing = ({
           />
           <select
             value={sortOption}
-            onChange={(e) => {
-              setSortOption(e.target.value);
-              setCurrentPage(1);
-            }}
+            onChange={(e) => setSortOption(e.target.value)}
             className="border rounded-lg px-3 py-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="default">Sort: Default</option>
@@ -230,7 +208,7 @@ const ProductListing = ({
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {currentItems.map((item) => (
+        {filteredProducts.map((item) => (
           <ProductCard
             key={item.id}
             item={item}
@@ -245,29 +223,6 @@ const ProductListing = ({
           />
         ))}
       </div>
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-4 mt-8">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <span className="font-medium">
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      )}
 
       {selectedProduct && (
         <ProductDetailsDrawer

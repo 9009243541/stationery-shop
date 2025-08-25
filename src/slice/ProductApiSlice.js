@@ -10,13 +10,38 @@ const ProductApiSlice = stationeryApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Product", id: "LIST" }],
     }),
+    // getAllProducts: builder.query({
+    //   query: () => ({
+    //     url: "products/getproducts",
+    //     method: "GET",
+    //   }),
+    //   providesTags: [{ type: "Product", id: "LIST" }],
+    // }),
     getAllProducts: builder.query({
-      query: () => ({
-        url: "products/getproducts",
+      query: ({ page = 1, limit = 10 }) => ({
+        url: `products/getproducts?page=${page}&limit=${limit}`,
         method: "GET",
       }),
       providesTags: [{ type: "Product", id: "LIST" }],
     }),
+    // getAllProducts: builder.query({
+    //   query: ({ page = 1, limit = 10 }) => ({
+    //     url: `products/getproducts?page=${page}&limit=${limit}`,
+    //     method: "GET",
+    //   }),
+    //   serializeQueryArgs: ({ endpointName }) => {
+    //     return endpointName; // ek hi cache key banega
+    //   },
+    //   merge: (currentCache, newItems) => {
+    //     // purane data ke saath naya data merge karo
+    //     currentCache.data.push(...newItems.data);
+    //     currentCache.total = newItems.total;
+    //   },
+    //   forceRefetch({ currentArg, previousArg }) {
+    //     return currentArg?.page !== previousArg?.page;
+    //   },
+    // }),
+
     updateProduct: builder.mutation({
       query: ({ productId, data }) => ({
         url: `products/update-product/${productId}`,
