@@ -110,7 +110,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
   const { pathname } = location;
-
+  const navigate = useNavigate();
   const isOnDiscountedStationery =
     pathname.startsWith("/discounted-stationery") || pathname === "/checkout";
 
@@ -126,7 +126,7 @@ const Navbar = () => {
     { to: "/case-study", label: "Case Study" },
     { to: "/blogs", label: "Blogs" },
     { to: "/contact", label: "Contact Us" },
-    { to: "/discounted-stationery", label: "shop now " },
+    // { to: "/discounted-stationery", label: "shop now " },
   ];
 
   // Inject discounted-stationery link dynamically
@@ -196,6 +196,13 @@ const Navbar = () => {
 
         {/* Desktop Icons */}
         <div className="hidden md:flex gap-4 items-center">
+          <button
+            className="bg-[#206577] text-white px-5 py-2 rounded-lg font-semibold shadow-md border-2 border-[#f1b71c] hover:bg-[#1e4f91] hover:border-[#f1b71c] transition-all duration-300"
+            onClick={() => navigate("/discounted-stationery")}
+          >
+            Shop Now
+          </button>
+
           <NavIcon
             to="/discounted-stationery/wishlist"
             icon={IconHeart}

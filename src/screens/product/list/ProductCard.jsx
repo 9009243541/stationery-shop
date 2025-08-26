@@ -50,12 +50,21 @@ const ProductCard = ({
         )}
       </button>
 
-      <img
+      {/* <img
         src={item.image || "/default-image.png"}
         alt={`Image of ${item.name}`}
         loading="lazy"
         className="w-full h-36 object-cover bg-gray-50 rounded-md"
-      />
+      /> */}
+      {/* 🖼️ Product Image */}
+      <div className="relative w-full h-44 rounded-xl overflow-hidden bg-gray-100">
+        <img
+          src={item.image || "/default-image.png"}
+          alt={`Image of ${item.name}`}
+          loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+        />
+      </div>
 
       <div className="mt-3 flex-grow flex flex-col justify-between">
         <div>
@@ -82,8 +91,10 @@ const ProductCard = ({
             ))}
             <StarHalf size={14} fill="currentColor" stroke="none" />
           </div> */}
-          <div className="flex items-center mt-1"> 
-            <span className="text-yellow-500">{item.discount} % proposed by {item.organizedBy} </span>
+          <div className="flex items-center mt-1">
+            <span className="text-yellow-500">
+              {item.discount} of the price is % proposed by {item.organizedBy}
+            </span>
           </div>
         </div>
 
@@ -124,7 +135,7 @@ const ProductCard = ({
               <span className="animate-spin">⏳</span>
             ) : (
               <>
-                <FaShoppingCart size={16} /> 
+                <FaShoppingCart size={16} />
               </>
             )}
           </button>

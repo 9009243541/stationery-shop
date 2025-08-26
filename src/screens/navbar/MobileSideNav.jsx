@@ -203,6 +203,15 @@ const MobileSideNav = ({ isOpen, onClose }) => {
 
         {/* Bottom Section */}
         <div className="p-5 pt-0 border-t border-gray-200 space-y-4">
+          <button
+            onClick={() => {
+              onClose();
+              navigate("/discounted-stationery");
+            }}
+            className="w-full bg-[#206577] text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-[#1e4f91] transition-all duration-300"
+          >
+            Shop Now
+          </button>
           <div className="flex gap-6">
             {bottomIcons.map(({ to, icon: Icon, label }) => (
               <Link
