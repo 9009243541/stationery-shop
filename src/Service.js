@@ -8,6 +8,7 @@ const stationeryApiSlice = createApi({
       const token = localStorage.getItem("token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
+         headers.set("x-access-token", token);
       }
       return headers;
     },

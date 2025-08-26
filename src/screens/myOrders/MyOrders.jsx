@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const MyOrders = () => {
   const { data, isLoading, isError } = useGetMyOrdersQuery();
-
+  console.log(data, "data");
   if (isLoading) return <p className="text-center py-10">Loading orders...</p>;
   if (isError)
     return <p className="text-center text-red-500">Something went wrong!</p>;
@@ -35,6 +35,7 @@ const MyOrders = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+              "x-access-token": token, 
         },
         body: JSON.stringify({
           orderId,

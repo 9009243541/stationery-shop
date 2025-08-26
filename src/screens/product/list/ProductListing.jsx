@@ -387,7 +387,7 @@ const ProductListing = ({
         timerProgressBar: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/cart"); // अपडेट: राउट को सामान्यीकृत किया
+          navigate("/discounted-stationery/cart");
         }
       });
     } catch (error) {
