@@ -7,7 +7,6 @@ import L from "leaflet";
 import { jwtDecode } from "jwt-decode";
 import { useGetUserProfileQuery } from "../../slice/UserAuthApiSlice";
 
-
 // Marker icon fix
 const markerIcon = new L.Icon({
   iconUrl:
@@ -194,7 +193,9 @@ const Checkout = ({
                 item.product.mrp,
                 item.product.discount
               ).toFixed(2);
-              const totalItemPrice = (discountedPrice * item.quantity).toFixed(2);
+              const totalItemPrice = (discountedPrice * item.quantity).toFixed(
+                2
+              );
 
               return (
                 <li key={index} className="border-b pb-2">
@@ -208,7 +209,8 @@ const Checkout = ({
                     {discountedPrice}
                   </p>
                   <p className="text-black-500 text-xs font-bold bg-yellow-100 px-2 py-1 rounded w-fit">
-                    {item.product.discount}% proposed by {item.product.organizedBy}
+                    {item.product.discount}% of the price is proposed by{" "}
+                    {item.product.organizedBy}
                   </p>
                   <p className="text-sm font-bold text-green-600 w-fit px-3 py-1 rounded">
                     Item Total: ₹{totalItemPrice}
