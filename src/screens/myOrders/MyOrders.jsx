@@ -140,6 +140,8 @@
 // };
 
 // export default MyOrders;
+
+/// second code
 import React, { useState } from "react";
 import { useGetMyOrdersQuery } from "../../slice/OrderApiSlice";
 import { motion } from "framer-motion";
@@ -162,6 +164,7 @@ const MyOrders = () => {
         Failed to load orders. Please try again.
       </p>
     );
+  const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
   const handleDownloadBill = async (orderId) => {
     try {
@@ -174,7 +177,6 @@ const MyOrders = () => {
       if (!token) {
         throw new Error("Authentication token not found. Please log in again.");
       }
-      const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
       const response = await fetch(
         `${BASE_URL}/bill/generate-bill?returnBlob=true`,
         {
