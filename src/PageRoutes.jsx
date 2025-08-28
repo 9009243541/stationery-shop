@@ -12,9 +12,16 @@ import OtpWithEmailWrapper from "./screens/otpWithEmail/OtpWithEmailWrapper";
 import UserNavigate from "./screens/users/UserNavigate";
 import UserRegisterWrapper from "./screens/users/UserRegister/UserRegisterWrapper";
 import UserProfileWrapper from "./screens/users/UserProfile/UserProfileWrapper";
+
+
+
 // import OtpWithPhoneWrapper from "./screens/otpWithPhone/OtpWithPhoneWrapper";
+
+
+
 import EditUserProfileWrapper from "./screens/users/EditUser/EditUserProfileWrapper";
-import Wishlist from "./MyComponent/Wishlist"; // Assuming this is the wishlist component
+import Wishlist from "./MyComponent/Wishlist";
+ // Assuming this is the wishlist component
 // import ProductDetail from "./MyComponent/ProductDetails";
 
 import FreeCopyDistribution from "./FreeCopyDistribution/FreeCopyDistribution";
@@ -66,10 +73,11 @@ const router = createBrowserRouter([
       { path: "/vision", element: <MissionAndVision /> },
       { path: "/work", element: <WorkSection /> },
       { path: "/donate", element: <Donate /> },
+      { path: "/my-orders", element: <MyOrders /> },
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
-      // Added route for OurReach component
+      // Added route for OurReach component  
     ],
   },
   { path: "/user", element: <UserNavigate /> },
@@ -79,7 +87,7 @@ const router = createBrowserRouter([
   { path: "/register", element: <UserRegisterWrapper /> },
   { path: "/login", element: <UserLoginWrapper /> },
   { path: "/user-profile", element: <UserProfileWrapper /> },
-  { path: "/my-orders", element: <MyOrders /> },
+  
   { path: "*", element: <NotFound /> },
 ]);
 const PageRoutes = () => {
