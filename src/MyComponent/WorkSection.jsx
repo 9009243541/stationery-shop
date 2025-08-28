@@ -32,6 +32,7 @@ const WorkSection = () => {
             <h3 className="font-semibold text-lg mb-2">
               📚 Free Copy Distribution
             </h3>
+            
             <p className="text-sm mb-4">
               Once a year, we distribute free notebooks and school supplies to
               children from underprivileged communities.
