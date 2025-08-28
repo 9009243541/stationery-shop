@@ -1,13 +1,17 @@
-
 import React, { useState } from "react";
 import { useGetMyOrdersQuery } from "../../slice/OrderApiSlice";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { IconFileDownload } from "@tabler/icons-react";
+import { Document, Page, pdfjs } from "react-pdf";
+
+// Set PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 const MyOrders = () => {
   const { data, isLoading, isError } = useGetMyOrdersQuery();
   const [selectedBillUrl, setSelectedBillUrl] = useState(null);
+  const [numPages, setNumPages] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadingStates, setLoadingStates] = useState({});
   const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "https://stationery-shop-backend-y2lb.onrender.com";
@@ -35,7 +39,7 @@ const MyOrders = () => {
         throw new Error("Please log in to download the bill.");
       }
       const response = await fetch(
-        `${BASE_URL}/bill/generate-bill?returnBlob=true`,
+        `${BASE_URL}/bill/generate?returnBlob=true`,
         {
           method: "POST",
           headers: {
@@ -87,7 +91,7 @@ const MyOrders = () => {
       }
 
       const response = await fetch(
-        `${BASE_URL}/bill/generate-bill?returnBlob=true`,
+        `${BASE_URL}/bill/generate?returnBlob=true`,
         {
           method: "POST",
           headers: {
@@ -108,6 +112,10 @@ const MyOrders = () => {
       }
 
       const blob = await response.blob();
+      if (blob.type !== "application/pdf") {
+        console.error("Received non-PDF blob:", blob.type);
+        throw new Error("Invalid file type received. Expected PDF.");
+      }
       const url = window.URL.createObjectURL(blob);
       setSelectedBillUrl(url);
       setIsModalOpen(true);
@@ -123,11 +131,17 @@ const MyOrders = () => {
     }
   };
 
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+    console.log("PDF loaded with", numPages, "pages");
+  };
+
   const closeModal = () => {
     if (selectedBillUrl) {
       window.URL.revokeObjectURL(selectedBillUrl);
     }
     setSelectedBillUrl(null);
+    setNumPages(null);
     setIsModalOpen(false);
   };
 
@@ -184,11 +198,9 @@ const MyOrders = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {order.products.map((p) => {
-                  console.log("🛒 Product Item:", JSON.stringify(p, null, 2));
                   const imageUrl = p.productId?.image
                     ? `${BASE_URL}/uploads/${p.productId.image}?t=${Date.now()}`
                     : "https://via.placeholder.com/64?text=No+Image";
-                  console.log("🖼️ Product Image URL:", imageUrl);
                   return (
                     <div
                       key={p._id}
@@ -198,10 +210,6 @@ const MyOrders = () => {
                         src={imageUrl}
                         alt={p.productId?.productName || p.name || "Product"}
                         className="w-16 h-16 object-cover rounded"
-                        // onError={() => {
-                        //   console.error("Failed to load image:", imageUrl);
-                        //   toast.warn(`Image not available for ${p.productId?.productName || p.name}`);
-                        // }}
                       />
                       <div>
                         <p className="font-medium text-gray-700">
@@ -239,15 +247,24 @@ const MyOrders = () => {
               </button>
             </div>
             {selectedBillUrl ? (
-              <iframe
-                src={selectedBillUrl}
-                title="Order Bill"
-                className="w-full h-[60vh] rounded-lg"
-                onError={() => {
+              <Document
+                file={selectedBillUrl}
+                onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={(error) => {
+                  console.error("Failed to load PDF:", error);
                   toast.error("Failed to load bill PDF. Please try downloading it.");
                   closeModal();
                 }}
-              />
+              >
+                {Array.from(new Array(numPages), (el, index) => (
+                  <Page
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
+                    renderTextLayer={true}
+                    renderAnnotationLayer={true}
+                  />
+                ))}
+              </Document>
             ) : (
               <p className="text-center text-gray-500">Loading bill...</p>
             )}
@@ -259,5 +276,3 @@ const MyOrders = () => {
 };
 
 export default MyOrders;
-// src/components/MyOrders.jsx
-// src/components/MyOrders.jsx
