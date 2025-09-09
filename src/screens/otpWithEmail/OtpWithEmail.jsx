@@ -50,7 +50,7 @@ const OtpWithEmail = ({ formikProps, otpSent, onSendOtp }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center pt-12 min-h-screen">
+    <div className="flex flex-col items-center justify-center pt-0 mb-1 min-h-screen">
       <div className="w-full max-w-md p-6 shadow-md rounded bg-white">
         <h1 className="text-2xl font-bold mb-6 text-center">Email Verification</h1>
 

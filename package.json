@@ -27,6 +27,7 @@
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "lucide-react": "^0.533.0",
+    "passport-google-oauth20": "^2.0.0",
     "puppeteer": "^24.17.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

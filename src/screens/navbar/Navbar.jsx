@@ -24,7 +24,7 @@ const ProfileDropdown = ({ isLoggedIn }) => {
       ]
     : [
         { label: "Login", to: "/login" },
-        { label: "Register", to: "/register" },
+        { label: "Register", to: "/user" },
       ];
 
   return (

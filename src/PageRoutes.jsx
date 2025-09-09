@@ -77,10 +77,8 @@ const router = createBrowserRouter([
 
       { path: "/free-distribution", element: <FreeCopyDistribution /> },
       { path: "*", element: <NotFound /> },
-      // Added route for OurReach component  
-    ],
-  },
-  { path: "/user", element: <UserNavigate /> },
+
+      { path: "/user", element: <UserNavigate /> },
   { path: "/update-user/:userId", element: <EditUserProfileWrapper /> },
   { path: "/otp", element: <OtpWithEmailWrapper /> },
   // { path: "/otp", element: <OtpWithPhoneWrapper /> },
@@ -89,6 +87,10 @@ const router = createBrowserRouter([
   { path: "/user-profile", element: <UserProfileWrapper /> },
   
   { path: "*", element: <NotFound /> },
+      // Added route for OurReach component  
+    ],
+  },
+  
 ]);
 const PageRoutes = () => {
   return <RouterProvider router={router} />;
