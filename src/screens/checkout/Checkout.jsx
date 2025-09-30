@@ -280,9 +280,7 @@ const Checkout = ({
           >
             <option value="">Select Payment Mode</option>
             <option value="cash">Cash on Delivery</option>
-            <option value="upi">UPI</option>
-            <option value="card">Card</option>
-            <option value="netbanking">Net Banking</option>
+            
           </select>
         </div>
 
