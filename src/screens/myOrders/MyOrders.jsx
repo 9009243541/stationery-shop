@@ -6,8 +6,6 @@ import { IconFileDownload } from "@tabler/icons-react";
 
 const MyOrders = () => {
   const { data, isLoading, isError } = useGetMyOrdersQuery();
-  const [selectedBillUrl, setSelectedBillUrl] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadingStates, setLoadingStates] = useState({});
   const BASE_URL =
     import.meta.env.VITE_APP_BASE_URL ||
@@ -22,12 +20,14 @@ const MyOrders = () => {
       </p>
     );
 
+  // Download PDF bill
   const handleDownloadBill = async (orderId) => {
     try {
       setLoadingStates((prev) => ({
         ...prev,
         [orderId]: { ...prev[orderId], download: true },
       }));
+
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Please log in to download the bill.");
 
@@ -68,55 +68,49 @@ const MyOrders = () => {
     }
   };
 
- const handleViewBill = async (orderId) => {
-  try {
-    setLoadingStates((prev) => ({
-      ...prev,
-      [orderId]: { ...prev[orderId], view: true },
-    }));
+  // Open PDF bill in new tab
+  const handleViewBill = async (orderId) => {
+    try {
+      setLoadingStates((prev) => ({
+        ...prev,
+        [orderId]: { ...prev[orderId], view: true },
+      }));
 
-    const token = localStorage.getItem("token");
-    if (!token) throw new Error("Please log in to view the bill.");
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Please log in to view the bill.");
 
-    const response = await fetch(
-      `${BASE_URL}/bill/generate?returnBlob=true`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          "x-access-token": token,
-        },
-        body: JSON.stringify({ orderId, paymentMode: "cash" }),
+      const response = await fetch(
+        `${BASE_URL}/bill/generate?returnBlob=true`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "x-access-token": token,
+          },
+          body: JSON.stringify({ orderId, paymentMode: "cash" }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch bill");
       }
-    );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to fetch bill");
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      // Open in new browser tab
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error(`Error viewing bill for order ${orderId}:`, error);
+      toast.error(`Failed to view bill: ${error.message}`);
+    } finally {
+      setLoadingStates((prev) => ({
+        ...prev,
+        [orderId]: { ...prev[orderId], view: false },
+      }));
     }
-
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-
-    // Open the PDF in a new tab
-    window.open(url, "_blank");
-
-  } catch (error) {
-    console.error(`Error viewing bill for order ${orderId}:`, error);
-    toast.error(`Failed to view bill: ${error.message}`);
-  } finally {
-    setLoadingStates((prev) => ({
-      ...prev,
-      [orderId]: { ...prev[orderId], view: false },
-    }));
-  }
-};
-
-
-  const closeModal = () => {
-    setSelectedBillUrl(null);
-    setIsModalOpen(false);
   };
 
   return (
@@ -205,32 +199,6 @@ const MyOrders = () => {
           </motion.div>
         ))}
       </div>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-3xl w-full max-h-[80vh] overflow-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">Order Bill</h3>
-              <button
-                onClick={closeModal}
-                className="text-gray-500 hover:text-gray-700 text-xl font-bold"
-              >
-                ✕
-              </button>
-            </div>
-            {selectedBillUrl ? (
-              <iframe
-                src={selectedBillUrl}
-                title="Order Bill"
-                className="w-full h-[70vh] rounded-lg"
-                style={{ border: "none" }}
-              />
-            ) : (
-              <p className="text-center text-gray-500">Loading bill...</p>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
