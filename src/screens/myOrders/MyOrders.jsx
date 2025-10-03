@@ -7,6 +7,7 @@ import { IconFileDownload } from "@tabler/icons-react";
 const MyOrders = () => {
   const { data, isLoading, isError } = useGetMyOrdersQuery();
   const [loadingStates, setLoadingStates] = useState({});
+  const [bills, setBills] = useState({}); // ✅ Add this
   const BASE_URL =
     import.meta.env.VITE_APP_BASE_URL ||
     "https://stationery-shop-backend-y2lb.onrender.com";
@@ -20,95 +21,115 @@ const MyOrders = () => {
       </p>
     );
 
-  // Download PDF bill
-  const handleDownloadBill = async (orderId) => {
+  // ==============================
+  // Create or get bill from backend
+  // ==============================
+  const createOrGetBill = async (order) => {
+    if (bills[order._id]) return bills[order._id];
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Please login to access bill");
+
+      const response = await fetch(`${BASE_URL}/bill`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          orderId: order._id,
+          userId: order.userId?._id || order.userId,
+          totalAmount: order.totalAmount,
+          paymentMode: order.paymentMode || "cash",
+        }),
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(text || "Failed to create bill");
+      }
+
+      const billData = await response.json();
+      setBills((prev) => ({ ...prev, [order._id]: billData.bill }));
+      return billData.bill;
+    } catch (err) {
+      console.error(err);
+      toast.error("Error generating bill: " + err.message);
+      return null;
+    }
+  };
+
+  // ==============================
+  // View bill PDF using orderId
+  // ==============================
+  const handleViewBill = async (order) => {
     try {
       setLoadingStates((prev) => ({
         ...prev,
-        [orderId]: { ...prev[orderId], download: true },
+        [order._id]: { ...prev[order._id], view: true },
       }));
 
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("Please log in to download the bill.");
+      // Ensure bill exists (optional)
+      await createOrGetBill(order);
 
-      const response = await fetch(
-        `${BASE_URL}/bill/generate?returnBlob=true`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            "x-access-token": token,
-          },
-          body: JSON.stringify({ orderId, paymentMode: "cash" }),
-        }
-      );
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${BASE_URL}/bill/view-by-order/${order._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to generate bill");
+        const text = await response.text();
+        throw new Error(text || "Failed to fetch bill PDF");
       }
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `bill_${orderId}.pdf`;
-      link.click();
+      window.open(url, "_blank");
       window.URL.revokeObjectURL(url);
-      toast.success("Bill downloaded successfully!");
-    } catch (error) {
-      console.error(`Error downloading bill for order ${orderId}:`, error);
-      toast.error(`Failed to download bill: ${error.message}`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Error viewing bill: " + err.message);
     } finally {
       setLoadingStates((prev) => ({
         ...prev,
-        [orderId]: { ...prev[orderId], download: false },
+        [order._id]: { ...prev[order._id], view: false },
       }));
     }
   };
 
-  // Open PDF bill in new tab
-  const handleViewBill = async (orderId) => {
+  // ==============================
+  // Send bill via email using orderId
+  // ==============================
+  const handleSendBillEmail = async (order) => {
     try {
       setLoadingStates((prev) => ({
         ...prev,
-        [orderId]: { ...prev[orderId], view: true },
+        [order._id]: { ...prev[order._id], download: true },
       }));
 
+      // Ensure bill exists (optional)
+      await createOrGetBill(order);
+
       const token = localStorage.getItem("token");
-      if (!token) throw new Error("Please log in to view the bill.");
+      const response = await fetch(`${BASE_URL}/bill/email-by-order/${order._id}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      const response = await fetch(
-        `${BASE_URL}/bill/generate?returnBlob=true`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            "x-access-token": token,
-          },
-          body: JSON.stringify({ orderId, paymentMode: "cash" }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch bill");
+      const result = await response.json();
+      if (result.success) {
+        toast.success("Bill sent to your registered email!");
+      } else {
+        throw new Error(result.message || "Failed to send bill");
       }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      // Open in new browser tab
-      window.open(url, "_blank");
-    } catch (error) {
-      console.error(`Error viewing bill for order ${orderId}:`, error);
-      toast.error(`Failed to view bill: ${error.message}`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Error sending bill: " + err.message);
     } finally {
       setLoadingStates((prev) => ({
         ...prev,
-        [orderId]: { ...prev[orderId], view: false },
+        [order._id]: { ...prev[order._id], download: false },
       }));
     }
   };
@@ -146,24 +167,27 @@ const MyOrders = () => {
                 </p>
               </div>
 
+              {/* Action buttons */}
               <div className="flex justify-end mb-4 space-x-4">
                 <button
-                  onClick={() => handleViewBill(order._id)}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition disabled:bg-green-300 flex items-center"
+                  onClick={() => handleViewBill(order)}
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition flex items-center disabled:bg-green-300"
                   disabled={loadingStates[order._id]?.view}
                 >
                   {loadingStates[order._id]?.view ? "Loading..." : "View Bill"}
                 </button>
+
                 <button
-                  onClick={() => handleDownloadBill(order._id)}
-                  className="text-blue-500 hover:text-blue-600 transition disabled:text-blue-300"
+                  onClick={() => handleSendBillEmail(order)}
+                  className="text-blue-500 hover:text-blue-600 transition disabled:text-blue-300 flex items-center"
                   disabled={loadingStates[order._id]?.download}
-                  title="Download Bill"
+                  title="Send Bill to Email"
                 >
                   <IconFileDownload className="w-6 h-6" />
                 </button>
               </div>
 
+              {/* Products grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {order.products.map((p) => {
                   const imageUrl = p.productId?.image
